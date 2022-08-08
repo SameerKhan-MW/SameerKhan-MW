@@ -1,0 +1,383 @@
+﻿@model SchoolProgramme.Models.MstUser
+
+@{
+
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/Images/plll.jpg" type="image/x-icon" />
+    <title>Login - Plan Internation School</title>
+    <!-- Main CSS-->
+    <link rel="stylesheet" href="~/css/cutom.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0//css/font-awesome.css" media="all" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/jquery.bootstrap-growl.js"></script>
+    <style>
+
+        .boinp {
+            border-left: 1px solid #ced4da !important;
+            border-radius: 0 !important;
+        }
+
+        .lg1 {
+            border: 2px solid #ED1017;
+        }
+
+        .lg2 {
+            border: 2px solid #1BC4FD;
+        }
+
+        .lg3 {
+            border: 2px solid #E31E24;
+        }
+
+        .lg4 {
+            border: 2px solid #0071CD;
+        }
+
+        .lg5 {
+            border: 2px solid #E38A15;
+        }
+
+        body:before {
+        }
+    </style>
+</head>
+<body oncontextmenu='return false' class='snippet-body login-pg'>
+    <section class="login-content">
+        <div class="login-main-wrp">
+            <div class="row new-lg">
+                <div class="col-md-7">
+                    <div class="left-side-sc">
+                        <figure>
+                            <ul>
+                                <li>
+                                    <div class="pic-ft">
+                                        <a href="#">
+                                            <img src="~/Images/EElogo.png" alt="" class="img-fluid">
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="pic-ft">
+                                        <a href="#">
+                                            <img src="~/Images/Ayysmanbharatt.png" alt="" class="img-fluid">
+                                        </a>
+                                    </div>
+                                </li>  
+                                <li>
+                                    <a href="#">
+                                        <img src="~/Images/natinalmmlogo.png" alt="" class="img-fluid">
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="pic-ft">
+                                        <a href="#">
+                                            <img src="~/Images/planlogf.png" alt="" class="img-fluid">
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="pic-ft">
+                                        <a href="#">
+                                            <img src="~/Images/unfpalogo.png" alt="" class="img-fluid">
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul> 
+                            <h2>Welcome To </h2>
+                            <h3>
+                                Plan International School
+                            </h3>
+                        </figure>
+                    </div>
+
+                </div>
+                <div class="col-md-5 lg-right">
+                    <div class="right-side-sc-login">
+                        <div class="scroll-right-wp">
+                            <div class="tab-log-btn mb-3">
+                                <h3 class="text-login mb-4">Login To Your Account</h3>
+                                @*<a href="@Url.Action("Registration","Login")" class="btn btn-light" style="text-transform:uppercase;">Registration</a>*@
+                            </div>
+                            @*<h5 class="text-body">Please login to your account</h5>*@
+                            @*<form class="login-form" asp-action="Login" asp-controller="Login" method="post">*@
+                            <form id="account" asp-controller="Login" asp-antiforgery="true" asp-action="Login" method="post" class="needs-validation" novalidate>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text"><img src="~/Images/user-login.svg" alt=""></span>
+                                                </div>
+                                                <input asp-for="UserName" class="form-control" placeholder="Username" autofocus required />
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-2">
+                                            <span asp-validation-for="UserName" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="input-group mb-3">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text "><i class="show-password  fa fa-eye"></i></span>
+                                                </div>
+                                                <input asp-for="Password" type="password" class="form-control password-show" placeholder="Password" autocomplete="new-password" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-2">
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="captcha-fm">
+                                                <dnt-captcha asp-captcha-generator-max="999999"
+                                                             asp-captcha-generator-min="111111"
+                                                             asp-captcha-generator-language="English"
+                                                             asp-captcha-generator-display-mode="ShowDigits"
+                                                             asp-use-relative-urls="true"
+                                                             asp-placeholder="Enter Captcha"
+                                                             asp-validation-error-message="Please enter the security code."
+                                                             asp-font-name="Tahoma"
+                                                             asp-font-size="20"
+                                                             asp-fore-color="#333333"
+                                                             asp-back-color="#ccc"
+                                                             asp-text-box-class="text-box form-control boinp"
+                                                             asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span></span>{0}"
+                                                             asp-validation-message-class="text-danger"
+                                                             asp-refresh-button-class="fa fa-repeat btn-sm"
+                                                             asp-use-noise="false" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            <div class="pull-right">
+                                                <a href="#" data-toggle="modal" data-target="#ModalForgetPassword" class="ml-auto mb-0 text-sm" style="font-size:14px;">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-danger bg-orange w-100 mt-2" style="letter-spacing:.03em;"><i class="fa fa-sign-in fa-lg fa-fw"></i>&nbsp;Login</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-12 text-center">
+                                        <label class="text-danger pull-center">@ViewBag.Message</label>
+                                    </div>
+                                    @*<span asp-validation-for="Password" class="text-danger"></span>*@
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        $('.show-password').click(function () {
+
+            if ($(this).hasClass('fa-eye')) {
+
+                $(this).removeClass('fa-eye');
+
+                $(this).addClass('fa-eye-slash');
+
+                $('.password-show').attr('type', 'text');
+
+            } else {
+
+                $(this).removeClass('fa-eye-slash');
+
+                $(this).addClass('fa-eye');
+
+                $('.password-show').attr('type', 'password');
+            }
+        });
+    </script>
+
+    <!------------------->
+    <div id="ModalAlert" class="modal" role="dialog" style="z-index: 999999999;">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title ModalAlert-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="javascript:$('#ModalAlert').hide(500)">&times;</button>
+
+                </div>
+                <div class="modal-body ModalAlert-body" style="padding-bottom: 1px;">
+                </div>
+                <div style="height:35px;">
+                    <button type="button" class="btn btn-danger pull-right" onclick="javascript:$('#ModalAlert').hide(500)" data-dismiss="modal" style="margin: -5px 10px;">OK</button>
+                </div>
+                @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-right" onclick="javascript:$('#ModalAlert').hide(500)" data-dismiss="modal">OK</button>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalForgetPassword" class="modal" role="dialog" style="z-index: 999999999;">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title ModalAlert-title">Forgot Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="javascript:$('#ModalForgetPassword').hide(500)">&times;</button>
+
+                </div>
+                <div class="modal-body ModalAlert-body" style="padding-bottom: 1px;">
+
+                    <form class="forget-form" action="index.html">
+                        @*<h3 class="login-head"><i class="fa fa-lg fa-fw fa-lock"></i>Forgot Password ?</h3>*@
+                        <div class="form-group">
+                            <label class="control-label">USERNAME</label>
+                            <input class="form-control clsEmail" type="text" placeholder="USERNAME">
+                        </div>
+                        <div class="form-group btn-container">
+                            <a class="btn btn-primary btn-block clsReset" id="btnReset" data-toggle="flip" href="javascript:void(0);" onclick="ResetPassword()"><i class="fa fa-unlock fa-lg fa-fw"></i>RESET</a>
+                            @*<button class="btn btn-primary clsReset"><i class="fa fa-unlock fa-lg fa-fw"></i>RESET</button>*@
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="ModalMessageShow" class="modal" role="dialog" style="z-index: 999999999;">
+        <div class="modal-dialog modal-sm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title ModalAlert-title">Forgot Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="javascript:$('#ModalForgetPassword').hide(500)">&times;</button>
+                </div>
+                <div class="modal-body ModalAlert-body" style="padding-bottom: 1px;">
+
+                    <form class="forget-form" action="index.html">
+                        <div class="form-group">
+                            <label class="control-label">USERNAME</label>
+                            <input class="form-control clsEmail" type="text" placeholder="USERNAME">
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!------------------->
+    <!--<div id="ModalAlertwrngpass" class="modal" role="dialog" style="z-index: 999999999;">
+        <div class="modal-dialog modal-md">-->
+    <!-- Modal content-->
+    <!--<div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title ModalAlert-title">@ViewBag.Message</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="javascript:$('#ModalAlert').hide(500)">&times;</button>
+
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <!-- Essential javascripts for application to work-->
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="js/plugins/pace.min.js"></script>
+    <script type="text/javascript">
+        // Login Page Flipbox control
+        $('.login-content [data-toggle="flip"]').click(function () {
+            $('.login-box').toggleClass('flipped');
+            return false;
+        });
+        function ResetPassword() {
+          var EmailID = $('.clsEmail').val();
+            $.ajax({
+                url: '@Url.Content("~/")' + "Login/ForgetPassword_SendEmail",
+                type: "POST",
+                data: { EmailID: EmailID},
+                success: function (result) {
+                    if (result == "1") {
+                        debugger;
+                        $('.clsEmail').val('');
+
+                        $("#ModalForgetPassword").modal('toggle');
+
+                        $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Password sent to your registered email Address, Please click and reset your password", {
+                            type: 'info',
+                            align: 'center',
+                            width: 'auto',
+                            allow_dismiss: true,
+                            delay: 1000
+                        });
+                      //  Show_ModalAlert_Popups("Password sent to your registered email Address, Please click and reset your password", "Alert");
+
+
+
+                    }
+
+                    }
+            })
+        }
+
+    </script>
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            $(function () {
+
+                $('#ModalAlertwrngpass').modal('show');
+
+            });
+            //$(window).on('load', function () {
+
+            //});
+        </script>
+    }
+
+    <script type="text/javascript">
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+
+</body>
+</html>

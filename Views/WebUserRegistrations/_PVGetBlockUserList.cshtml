@@ -1,0 +1,83 @@
+﻿
+@using Microsoft.AspNetCore.Http;
+@using SchoolProgramme
+
+@*@model IEnumerable<SchoolProgramme.Models.tblwebUserRegistration>*@
+
+@model WebUserRegistrationCollection
+
+<script type="text/javascript">
+    $(function () {
+        $('#BloList').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+
+            ],
+            'paging': true,
+            'lengthChange': false,
+            "scrollX": true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+
+        })
+    })
+</script>
+
+
+<table id="BloList" class="table table-bordered table-striped w-100">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>User Level</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Block</th>
+            <th>Designation</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Mobile</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int a = 1;
+            @foreach (var LRF in Model.WURList)
+            {
+                <tr>
+                    <td>@a</td>
+                    <td>@LRF.UserLevel</td>
+                    <td>@LRF.State.StateName</td>
+                    <td>@LRF.District.District</td>
+                    <td>@LRF.Block.BlockName</td>
+                    <td>@LRF.Designation.Role</td>
+                    <td>@LRF.Name</td>
+                    <td>@LRF.Gender.Gender</td>
+                    <td>@LRF.MobileNumber</td>
+                    <td>@LRF.EmailId</td>
+                    <td>
+                        @if (Model.BSCList.Where(p => p.UserRegistrationID == LRF.UserRegistrationID).Count() > 0)
+                        {
+                            <a onclick="BlockQuesDatashow(@LRF.UserRegistrationID)" style="cursor:pointer;" id="btnBlockDataShow" class="text-danger"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        }
+                        else
+                        {
+                            <a onclick="BlockQues(@LRF.UserRegistrationID)" style="cursor:pointer;" id="btnBlockQues" class="text-success"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        }
+                    </td>
+                </tr>
+                a += 1;
+            }
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+
+
+
+</script>
+

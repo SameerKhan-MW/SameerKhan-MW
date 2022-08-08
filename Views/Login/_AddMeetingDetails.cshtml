@@ -1,0 +1,234 @@
+﻿@using SchoolProgramme
+@model Stage2DateOfMeeting
+
+
+<div class="form-group">
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label asp-for="PurposeId" class="control-label"></label>
+            <i class="fa fa-question-circle" title=""></i>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.PurposeId, new SelectList(Model.Purposelst, "id", "value"), "Select", new { @class = "custom-select" })
+                <span asp-validation-for="PurposeId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label asp-for="MeetingDate" class="control-label"></label>
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                @*<input asp-for="MeetingDate" onchange="CheckPreviousDate('MeetingDate');" class="form-control" type="date" />*@
+                <input asp-for="MeetingDate"  class="form-control" type="date" />
+                <span asp-validation-for="MeetingDate" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label asp-for="StartingTime" class="control-label"></label>
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                <input asp-for="StartingTime" onchange="CheckPreviousDate('StartingTime','EndTime','StartingTime');" class="form-control" type="time" />
+                <span asp-validation-for="StartingTime" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label asp-for="EndTime" class="control-label"></label>
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                <input asp-for="EndTime" onchange="CheckPreviousDate('StartingTime','EndTime','EndTime');" class="form-control" type="time" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label asp-for="NoofStudent" class="control-label"></label>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label asp-for="NoofTeacher" class="control-label"></label>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label asp-for="NoofOther" class="control-label"></label>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <label asp-for="NumberOfPeople" class="control-label"></label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <input asp-for="NoofStudent" onchange="AutoCalculateTotal(this)" id="txtns" class="form-control" type="text" />
+                <span asp-validation-for="NoofStudent" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <input asp-for="NoofTeacher" onchange="AutoCalculateTotal(this)" id="txtnt" class="form-control" type="text" />
+                <span asp-validation-for="NoofTeacher" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <input asp-for="NoofOther" onchange="AutoCalculateTotal(this)" id="txtno" class="form-control" type="text" />
+                <span asp-validation-for="NoofOther" class="text-danger"></span>
+            </div>
+
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <div class="form-group">
+                <input asp-for="NumberOfPeople" id="txttotal" readonly class="form-control" type="text" />
+                <span asp-validation-for="NumberOfPeople" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label class="control-label">Minutes Of Meeting</label>
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                <input type="file" name="Files" id="MOMFiles" onchange="UploadMOMFile(this)" accept=".jpg,.jpeg,.png,.pdf,.xlsx,.xls,.doc,.docx" />
+                <input type="hidden" asp-for="hdnMeetingUpload" />
+                @Html.ValidationMessage("UploadMOMRequired", "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label class="control-label">Picture</label>
+
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                <input type="file" name="Files" id="PictureFiles" onchange="UploadPictureFiles(this)" accept=".jpg,.jpeg,.png,.pdf,.xlsx,.xls,.doc,.docx" />
+                <input type="hidden" asp-for="hdnPictureUpload" />
+                @Html.ValidationMessage("UploadPictureRequired", "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<input type="hidden" id="noofttlstudent" value="@Model.LSTRegistrationForm.Select(p => p.TotalNoofStudent).FirstOrDefault()" />
+<input type="hidden" id="noofttlteacher" value="@Model.LSTRegistrationForm.Select(p=>p.TotalNoofTeachingStaff).FirstOrDefault()" />
+<script type="text/javascript">
+    function UploadMOMFile(uploadedFile) {
+        var controlId = uploadedFile.id;
+        var files = $("#" + controlId).get(0).files;
+        var fileData = new FormData();
+
+
+        for (var j = 0; j < files.length; j++) {
+            fileData.append("files", files[j]);
+        }
+
+        $.ajax({
+                url: "@Url.Action("UploadMOM", "Stage1STP2")",
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    if (result.fileName != "") {
+                        $("#hdnMeetingUpload").val(result.fileName);
+                    }
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+    }
+
+    function UploadPictureFiles(uploadedFile) {
+        var controlId = uploadedFile.id;
+        var files = $("#" + controlId).get(0).files;
+        var fileData = new FormData();
+
+        for (var j = 0; j < files.length; j++) {
+            fileData.append("files", files[j]);
+        }
+
+        $.ajax({
+                url: "@Url.Action("UploadPicture", "Stage1STP2")",
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                success: function (result) {
+                    if (result.fileName != "") {
+                        $("#hdnPictureUpload").val(result.fileName);
+                    }
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });
+    }
+
+    function AutoCalculateTotal(CTRLid) {
+
+        if ($('#txtns').val() == '') {
+            $('#txtns').val(0);
+        }
+        if ($('#txtnt').val() == '') {
+            $('#txtnt').val(0);
+        }
+        if ($('#txtno').val() == '') {
+            $('#txtno').val(0);
+        }
+        
+
+        if (parseFloat($('#txtns').val()) > parseFloat($('#noofttlstudent').val())) {
+            $(CTRLid).val(0);
+            $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Total Student Population validation failed", {
+                type: 'warning',
+                align: 'center',
+                width: 'auto',
+                allow_dismiss: true,
+                delay: 10000
+            });
+           
+        }
+        if (parseFloat($('#txtnt').val()) > parseFloat($('#noofttlteacher').val())) {
+            $(CTRLid).val(0);
+            $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Total Teacher Population validation failed", {
+                type: 'warning',
+                align: 'center',
+                width: 'auto',
+                allow_dismiss: true,
+                delay: 10000
+            });
+            
+        }
+        $('#txttotal').val(parseFloat($('#txtns').val()) + parseFloat($('#txtnt').val()) + parseFloat($('#txtno').val()));
+
+    }
+</script>

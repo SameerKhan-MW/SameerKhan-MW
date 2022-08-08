@@ -1,0 +1,643 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model SchoolProgramme.Models.MstUser
+
+@{
+    ViewData["Title"] = "Add User";
+    Layout = "~/Views/Shared/_LayoutAdminLTEAdmin.cshtml";
+}
+
+
+<link href="~/jstree/jstree.min.css" rel="stylesheet" />
+<link href="~/jstree/style.min.css" rel="stylesheet" />
+<script src="~/jstree/jstree.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css" />
+
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <section id="AboutSection" class="mt-4 mb-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6">
+                    <h4 class="Headingcolorbg">Add User</h4>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <div class="pull-right">
+                        <a asp-action="Index" class="btn btn-primary backtodetailbutton">Back to List</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label">Username</label>
+                        <input asp-for="UserName" required onchange="CheckUserAvail()" id="txtUserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label">Password</label>
+                        <input asp-for="Password" required maxlength="20" placeholder="Enter password here(min- 6 charcater, max - 20)." class="form-control" type="password" onchange="CheckUserPasswordAvail()" id="txtPassword" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="FullName" class="control-label">Name</label>
+                        <input asp-for="FullName" required maxlength="60" class="form-control" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="UserEmailID" class="control-label">Email</label>
+                        <input required asp-for="UserEmailID" onchange="CheckUserEmailAvail()" type="email" id="txtUserEmail" maxlength="60" placeholder="example@mail.com" class="form-control" />
+                        <span asp-validation-for="UserEmailID" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="Mobile" class="control-label">Contact</label>
+                        <input asp-for="Mobile" maxlength="10" id="mobile" onchange="checkUserMobileAvail()" onblur="validMobile()" onkeydown="return ValidateNumber(event);" class="form-control" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label asp-for="RoleID" class="control-label">Role</label>
+                        <select class="form-control" asp-for="RoleID" onchange="setloctiontableflag()" asp-items="@(new SelectList(@ViewBag.Role,"RoleID","Role"))">
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div id="DVLoc" class="row">
+                    <div class="col-md-6">
+                        <div class="bg-white rounded-lg p-2 shadow" style="min-height: 51px;">
+                            <label class="control-label">Location</label>
+                            <div class="pull-right">
+                                <a class="btn btn-primary" style="color:white" onclick="setloctiontableflagfilter()">Select</a>
+                            </div>
+                            <div id="URjstreeFilter"></div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-white rounded-lg p-2 shadow" style="min-height: 51px;">
+                            <div id="URjstree2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="divLocation" style="display:none;">
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">State</label>
+                        <select type="text" required id="StateId" class="form-control" asp-items="@(new SelectList(@ViewBag.StateID,"StateID","StateName"))">
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">District</label>
+                        <select type="text" class="form-control" id="DistrictId" name="DistrictId" asp-items="@(new SelectList(string.Empty,"DistrictID","District"))">
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Block</label>
+                        <select type="text" class="form-control" id="BlockId" name="BlockId" asp-items="@(new SelectList(string.Empty,"BlockID","BlockName"))">
+                        </select>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" id="divFaclity" style="display:none;">
+                <div class="col-xl-4 col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Schools</label>
+                        <select type="text" class="form-control" id="SUID" name="SUID" asp-items="@(new SelectList(string.Empty,"UDISEID","SchoolName"))">
+                        </select>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-xs-12">
+                    <input type="submit" value="Save" class="btn btn-success savebutton pull-right" />
+                </div>
+            </div>
+        </div>
+    </section>
+    <input type="hidden" id="UserRoleID" value="@ViewBag.UserRoleID" />
+    <input type="hidden" id="LocationDetailselectedItems" name="LocationDetailselectedItems" value="hdd" />
+    <input type="hidden" id="LocationItems" name="LocationItems" value="hfdd" />
+</form>
+@if (ViewBag.Message != null)
+{
+    @if (ViewBag.RollNo == 1)
+    {
+        <script type="text/javascript">
+             $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> @ViewBag.Message", {
+            type: 'danger',
+                align: 'center',
+                width: 'auto',
+                offset: { from: 'top', amount: 100 }, // 'top', or 'bottom'
+                allow_dismiss: true,
+                delay: 1000
+            });
+              $('#divLocation').show();
+            $('#divFaclity').show();
+
+        </script>
+    }
+    else if (ViewBag.RollNo == 2)
+    {
+        <script type="text/javascript">
+             $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> @ViewBag.Message", {
+            type: 'danger',
+                align: 'center',
+                width: 'auto',
+                offset: { from: 'top', amount: 100 }, // 'top', or 'bottom'
+                allow_dismiss: true,
+                delay: 1000
+             });
+            $('#DVLoc').hide();
+            $('#divLocation').hide();
+            $('#divFaclity').hide();
+        </script>
+    }
+    else
+    {
+
+    }
+    @*window.onload = function () {
+            alert("@ViewBag.Message");
+        };*@
+}
+
+<script type="text/javascript">
+    function CheckUserAvail() {
+        var masterData = {
+            "UserName": $('#txtUserName').val()
+                };
+                $.ajax({
+                    url: '@Url.Content("~/")' + "Users/IsUserAvailable",
+                    type: "POST",
+                    data: masterData,
+                    success: function (result) {
+                    if (result == false) {
+                    $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> User Name Already Exist ! Please try another.", {
+                    type: 'warning',
+                    align: 'center',
+                    width: 'auto',
+                    allow_dismiss: true,
+                    delay: 10000
+                    });
+                    $("#spanUserName").hide();
+                    $("#UserName").val('');
+                    $('#txtUserName').val('');
+                    $('#txtUserName').focus();
+                    }
+                    }
+                    })
+
+                    }
+
+                    function CheckUserEmailAvail() {
+                    var masterData = {
+                    "UEmail": $('#txtUserEmail').val()
+                    };
+                    $.ajax({
+                    url: '@Url.Content("~/")' + "Users/IsUserEmailAvailable",
+                    type: "POST",
+                    data: masterData,
+                    success: function (result) {
+                    if (result == false) {
+                    $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Email Already Exist ! Please try another.", {
+                    type: 'warning',
+                    align: 'center',
+                    width: 'auto',
+                    allow_dismiss: true,
+                    delay: 10000
+                    });
+                    $('#txtUserEmail').val('');
+                    $('#txtUserEmail').focus();
+                    }
+                    }
+                    })
+
+                    }
+
+                    function checkUserMobileAvail() {
+                    var masterData = {
+                    "Contact": $('#mobile').val()
+                    };
+                    $.ajax({
+                    url: '@Url.Content("~/")' + "Users/IsUsercontectAvailable",
+                    type: "POST",
+                    data: masterData,
+                    success: function (result) {
+                    if (result == false) {
+                    $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> User Contact No. Already Exist ! Please try another.", {
+                    type: 'warning',
+                    align: 'center',
+                    width: 'auto',
+                    allow_dismiss: true,
+                    delay: 10000
+                    });
+                    //$("#spanUserName").hide();
+                    //$("#UserName").val('');
+                    //$('#txtUserName').val('');
+                    //$('#txtUserName').focus();
+                    }
+                    }
+                    })
+
+                    }
+
+                    $('#Name').keypress(function (e) {
+                    var regex = new RegExp("^[a-zA-Z ]+$");
+                    var strigChar = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                    if (regex.test(strigChar)) {
+                    return true;
+                    }
+                    return false
+                    });
+
+
+                    $('#StateId').change(function () {
+                    var url = '@Url.Content("~/")' + "Users/GetDistrict";
+                    var ddlsource = "#StateId";
+                    $.getJSON(url, { stateid: $(ddlsource).val() }, function (data) {
+                    var districtitems = "<option value='0'>Select</option>";
+                    $("#DistrictId").empty();
+                    $("#BlockId").empty();
+                    $.each(data, function (i, district) {
+
+                    districtitems += "<option value='" + district.districtID + "'>" + district.district + "</option>";
+                    });
+                    $('#DistrictId').html(districtitems);
+                    });
+                    });
+
+
+                    $('#DistrictId').change(function () {
+                    var url = '@Url.Content("~/")' + "Users/GetBlock";
+                    var ddlsource = "#DistrictId";
+                    $.getJSON(url, { districtId: $(ddlsource).val() }, function (data) {
+                    var blockitems = "<option value='0'>Select</option>";
+                    $("#BlockId").empty();
+                    $.each(data, function (i, block) {
+                    blockitems += "<option value='" + block.blockID + "'>" + block.blockName + "</option>";
+                    });
+                    $('#BlockId').html(blockitems);
+                    });
+                    });
+
+                    $('#BlockId').change(function () {
+                    var url = '@Url.Content("~/")' + "Users/GetSchoolList";
+                    var ddlsource = "#BlockId";
+                    $.getJSON(url, { blockId: $(ddlsource).val() }, function (data) {
+                    var schoolitems = "<option value='0'>Select</option>";
+                    $("#SUID").empty();
+                    $.each(data, function (i, school) {
+                    schoolitems += "<option value='" + school.udiseid + "'>" + school.schoolName + "</option>";
+                    });
+                    $('#SUID').html(schoolitems);
+                    });
+                    });
+
+
+
+                    $('#mobile').keypress(function (e) {
+                    var arr = [];
+                    var kk = e.which;
+
+                    for (i = 48; i < 58; i++)
+                    arr.push(i);
+
+                    if (!(arr.indexOf(kk) >= 0))
+                    e.preventDefault();
+                    });
+                    $("#mobile").blur(function () {
+                    if ($("#mobile").val() == "") {
+                    $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please enter Contact Number", {
+                    type: 'danger',
+                    align: 'center',
+                    width: 'auto',
+                    offset: { from: 'top', amount: 100 }, // 'top', or 'bottom'
+                    allow_dismiss: true,
+                    delay: 1000
+                    });
+                    //alert("Please enter Contact Number");
+                    }
+                    else {
+                    var mob = /^[6-9]{1}[0-9]{9}$/;
+                    var mobile = $("#txtMOB").val();
+                    // if ()
+                    if ($("#mobile").val().length < 10 && mob.test(mobile) == false) {
+                    $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please enter valid Contact Number", {
+                    type: 'danger',
+                    align: 'center',
+                    width: 'auto',
+                    offset: { from: 'top', amount: 100 }, // 'top', or 'bottom'
+                    allow_dismiss: true,
+                    delay: 1000
+                    });
+                    // alert("Please enter valid Contact Number");
+                    return false;
+                    }
+
+                    }
+                    });
+
+</script>
+
+<script type="text/javascript">
+        $('#DVLoc').hide();
+        //$('#divLocation').hide();
+        //$('#divFaclity').hide();
+    function setloctiontableflag()
+        {
+        var RoleID = $('#RoleID').val();
+        if ($('#UserRoleID').val() == "6")
+        {
+            var p = { "RoleID": RoleID };
+            if (RoleID == 0 || RoleID == 4 || RoleID == 5)
+            {
+                $('#DVLoc').hide();
+                $('#divLocation').hide();
+                $('#divFaclity').hide();
+            }
+            else if (RoleID == 5)
+            {
+                $('#DVLoc').hide();
+                $('#divLocation').show();
+                $('#divFaclity').show();
+            }
+            else
+            {
+                 $.ajax({
+                    url: '@Url.Content("~/")' + "Users/fillUserLOCATION", //Your path should be here
+                    type: "POST",
+                    data: p,
+                    success: function (result) {
+                        debugger;
+                        $('#DVLoc').show();
+                        $('#divLocation').hide();
+                        $('#divFaclity').hide();
+                        result = JSON.parse(result);
+                        $('#URjstreeFilter').jstree("destroy").empty();
+
+                        $('#URjstreeFilter').on('changed.jstree', function (e, data)
+                        {
+                            var i, j;
+                            var postedItems = [];
+                            for (i = 0, j = data.selected.length; i < j; i++) {
+                                debugger;
+                                //Fetch the Id.
+                                var id = data.selected[i];
+
+                                //id = id[0];
+
+                                //Add the Node to the JSON Array.
+                                postedItems.push({
+                                    text: data.instance.get_node(data.selected[i]).text,
+                                    id: id
+                                });
+                            }
+                            //Serialize the JSON Array and save in HiddenField.
+
+                            $('#LocationItems').val(JSON.stringify(postedItems));
+                        }).jstree({
+                            "core": {
+                                "themes": {
+                                    "variant": "large"
+                                },
+                                "data": result @*//@Html.Raw(@Context.Session.GetString("UserLoc"))*@
+                            },
+                            "checkbox": {
+                                "keep_selected_style": false
+                            },
+                            "plugins": ["wholerow", "checkbox"],
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+
+                    }
+                });
+
+            }
+        }
+        else if ($('#UserRoleID').val() == "5")
+        {
+            $('#DVLoc').hide();
+            $('#divLocation').show();
+            $('#divFaclity').show();
+        }
+        else
+        {
+                if (RoleID == 6)
+                {
+                    $.bootstrapGrowl("You May Not Create " + $('#RoleId :selected').text() + " Role", {
+                        type: 'warning',
+                        allow_dissmiss: true,
+                        align: 'center',
+                        width: '400px',
+
+                    });
+                    $('#RoleId').val("0");
+                    $('#DVLoc').hide();
+                    $('#divLocation').hide();
+                    $('#divFaclity').hide();
+                }
+                else
+                {
+                    var p = { "RoleID": RoleID };
+                    if (RoleID == 0 || RoleID == 6)
+                    {
+                        $('#DVLoc').hide();
+                        $('#divLocation').hide();
+                        $('#divFaclity').hide();
+
+                    }
+                    else if (RoleID == 4 || RoleID == 5) {
+                        $('#DVLoc').hide();
+                        $('#divLocation').show();
+                        $('#divFaclity').show();
+                    }
+                    else
+                    {
+
+                        $.ajax({
+                        url: '@Url.Content("~/")' + "Users/fillUserLOCATION", //Your path should be here
+                        type: "POST",
+                        data: p,
+                        success: function (result) {
+                            debugger;
+                            $('#DVLoc').show();
+                            $('#divLocation').hide();
+                            $('#divFaclity').hide();
+                            result = JSON.parse(result);
+                            $('#URjstreeFilter').jstree("destroy").empty();
+                            $('#URjstreeFilter').on('changed.jstree', function (e, data) {
+
+                                var i, j;
+                                var postedItems = [];
+                                for (i = 0, j = data.selected.length; i < j; i++) {
+                                    debugger;
+                                    //Fetch the Id.
+                                    var id = data.selected[i];
+
+                                    //id = id[0];
+
+                                    //Add the Node to the JSON Array.
+                                    postedItems.push({
+                                        text: data.instance.get_node(data.selected[i]).text,
+                                        id: id
+                                    });
+                                }
+                                //Serialize the JSON Array and save in HiddenField.
+
+                                $('#LocationItems').val(JSON.stringify(postedItems));
+                            }).jstree({
+                            "core": {
+                                "themes": {
+                                    "variant": "large"
+                                },
+                                "data": result @*//@Html.Raw(@Context.Session.GetString("UserLoc"))*@
+                                },
+                            "checkbox": {
+                                "keep_selected_style": false
+                            },
+                            "plugins": ["wholerow", "checkbox"],
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            var err = eval("(" + xhr.responseText + ")");
+
+                        }
+                        });
+                    }
+                }
+        }
+
+
+    }
+
+    function setloctiontableflagfilter() {
+                    if ($('#URjstreeFilter a').hasClass('jstree-clicked')) {
+                        var RoleID = $('#RoleID').val();
+           var p = { "RoleID": RoleID, "id": 0, "LocationItems": $('#LocationItems').val() };
+        $.ajax({
+            url: '@Url.Content("~/")' + "Users/fillUserLOCATIONFLT", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result)
+            {
+
+                result = JSON.parse(result);
+                $('#URjstreeFilter').jstree("destroy").empty();
+                $('#URjstree2').jstree("destroy").empty();
+                $('#URjstree2').on('changed.jstree', function (e, data) {
+                    var i, j;
+                    var postedItems = [];
+                    for (i = 0, j = data.selected.length; i < j; i++) {
+                        debugger;
+                        //Fetch the Id.
+                        var id = data.selected[i];
+                        if (RoleID == "1") {
+                            id = id[0];
+
+                            //Add the Node to the JSON Array.
+                            postedItems.push({
+                                text: data.instance.get_node(data.selected[i]).text,
+                                id: id,
+                                parent: parentid,
+                                parentMain: parentMainid
+                            });
+                        }
+                        else {
+                            //Remove the ParentId.
+                            if (id.indexOf('-') != -1)
+                            {
+
+                                var parentMainid;
+                                var parentid;
+
+
+                                if (RoleID == "2")
+                                {
+                                    parentid = id.split("-")[0];
+                                    id = id.split("-")[1];
+                                }
+                                else if (RoleID == "3")
+                                {
+                                    parentMainid = id.split("-")[0];
+                                    parentid = id.split("-")[1];
+                                    id = id.split("-")[2];
+                                }
+
+                                //Add the Node to the JSON Array.
+                                postedItems.push({
+                                    text: data.instance.get_node(data.selected[i]).text,
+                                    id: id,
+                                    parent: parentid,
+                                    parentMain: parentMainid
+                                });
+                            }
+
+                        }
+                    }
+                //Serialize the JSON Array and save in HiddenField.
+                   $('#LocationDetailselectedItems').val(JSON.stringify(postedItems));
+             }).jstree({
+                "core": {
+                    "themes": {
+                        "variant": "large"
+                    },
+                    "data": result @*//@Html.Raw(@Context.Session.GetString("UserLoc"))*@
+                    },
+                "checkbox": {
+                    "keep_selected_style": false
+                },
+                "plugins": ["wholerow", "checkbox"],
+                });
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+
+            }
+        });
+                    } else {
+                        $.bootstrapGrowl("Please check the location", {
+                            align: 'center',
+                            type: 'danger',
+                            allow_dismiss: 'true',
+                        });
+                    }
+        }
+</script>
+
+
+
+
+
+
+

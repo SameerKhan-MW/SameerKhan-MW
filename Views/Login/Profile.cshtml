@@ -1,0 +1,1508 @@
+﻿@using Microsoft.AspNetCore.Http;
+@model SchoolProgramme.Models.tblRegistrationForm
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Views/Shared/_LayoutAdminLTE.cshtml";
+
+    //if (@Context.Session.GetString("UserTypeId") == "1")
+    //{
+    //    Layout = "~/Views/Shared/_LayoutAdminLTE.cshtml";
+    //}
+    //else
+    //{
+    //    Layout = "~/Views/Shared/_LayoutAdminLTE.cshtml";
+    //}
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+
+    <style>
+        .btn-orang {
+            color: #fff;
+            background-color: #f39c12;
+            border-color: #f39c12;
+        }
+
+            .btn-orang:hover {
+                color: #fff;
+                background-color: #fe8936;
+                border-color: #fe8936;
+            }
+
+        .card {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0px solid #72def6;
+            border-radius: .25rem;
+        }
+
+        .bgButton {
+            background: #bfd600 !important;
+            border-color: #bfd600 !important;
+        }
+
+            .bgButton:hover {
+                background: #b2c607 !important;
+                border-color: #b2c607 !important;
+            }
+
+
+        .bgbagheader {
+            background: #b9f2ff; /* Old browsers */
+        }
+
+        .dataTables_length {
+            margin-left: 10px;
+        }
+
+        .btn-orang {
+            color: #fff;
+            background-color: #f39c12;
+            border-color: #f39c12;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.1rem;
+            font-weight: 800;
+        }
+
+            .btn-orang:hover {
+                color: #fff;
+                background-color: #fe8936;
+                border-color: #fe8936;
+            }
+
+        .btn-blue {
+            color: #fff;
+            background-color: #00bae2;
+            border-color: #00bae2;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 0.1rem;
+            font-weight: 800;
+        }
+
+            .btn-blue:hover {
+                color: #fff;
+                background-color: #00bae2;
+                border-color: #00bae2;
+            }
+    
+
+        .buttons-html5 {
+            background-color: #4CAF50 !important; /* Green */
+            border: none !important;
+            color: white !important;
+            text-align: center !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            padding: 5px;
+            margin: 2px;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <section id="AboutSection" class="mt-4 mb-4" style="text-transform: uppercase; font-size: 14px; letter-spacing: 0.1rem;">
+
+        <div class="row">
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-3 col-xs-12">
+                <h2 class="PagemainHeading text-center">
+                    Profile
+                </h2>
+
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-2 col-sm-5 col-xs-12">
+
+            </div>
+
+            <div class="col-xl-4 col-lg-4 col-md-2 col-sm-4 col-xs-12">
+                <div class="pull-right">
+                    <a class="button button--pink mt-3" data-toggle="tooltip" data-placement="bottom" style="background-color: #ffa500 !important;text-transform:uppercase;" onclick="ShowModal()" title="Please give access to information which will be used for the Schools Directory Section. You may selected all or a few.">Control access <i class="ml-3 fa fa-check-square" aria-hidden="true"></i> </a>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <form action="Profile" method="post">
+                    <input type="hidden" asp-for="SUID" />
+                    <input type="hidden" asp-for="CreatedBy" />
+                    <input type="hidden" asp-for="CreatedOn" />
+                    <input type="hidden" asp-for="IsVerified" />
+                    @*<h5 class="bo-heading mt-3">School Address Info & Registration</h5>*@
+                    <div class="row">
+                        @*<div class="col-md-6">
+
+                            <div class="input-group mb-3 input-group-lg">
+                                <img id="SchoolPicturePath" height="200px" width="200px" src="/images/SchoolImageLogo/@ViewBag.SchoolImages" alt="">
+                            </div>
+
+                        </div>*@
+
+                        @*<div class="col-md-6">
+                            <label for="">School Image/Logo</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <input asp-for="SchoolImage" type="file"  class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>*@
+                        <div class="col-md-6">
+                            <label for="">Date of Registration</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/date.svg" alt=""></span>
+                                </div>
+                                <input asp-for="RegistrationDate" class="form-control" type="date" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-orang pull-right mt-3" value="Update" style="text-transform:uppercase;" />
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">School Name</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/school-name.svg" alt=""></span>
+                                </div>
+                                <input data-toggle="tooltip" data-placement="bottom" title="Please provide Fullname of the School. If your School is a part of a network school then add name of the city after a comma. E.g. ABC School, Delhi" asp-for="SchoolName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">School Code / UDISE Code</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/school-code.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" asp-for="SchoolCode">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Name of the Principal</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/principal.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" maxlength="100" asp-for="PrincipalName">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Email </label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/email.svg" alt=""></span>
+                                </div>
+                                <input data-toggle="tooltip" data-placement="bottom" title="This email id will receive login credentials and all major communication from Fairtrade India Team" asp-for="SchoolEmail" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Contact No.</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/contact.svg" alt=""></span>
+                                </div>
+                                <input type="text" maxlength="10" onblur="validMobile()" onkeydown="return ValidateNumber(event);" class="form-control" asp-for="PhoneNoSchool" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="">Address</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/adresss.svg" alt=""></span>
+                                </div>
+                                <textarea data-toggle="tooltip" data-placement="bottom" title="Please provide complete address. Landmark will be helpful."  id="txtaddress" cols="30" rows="3" class="form-control" asp-for="Address"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="">State</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/state.svg" alt=""></span>
+                                </div>
+                                <select type="text" class="form-control" asp-for="StateID" asp-items="@(new SelectList(@ViewBag.State,"StateId","StateName"))">
+                                    <option value="0">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">District</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/city.svg" alt=""></span>
+                                </div>
+                                <select type="text" class="form-control" asp-for="DistrictID" id="DistrictId" name="DistrictId" asp-items="@(new SelectList(ViewBag.District,"DistrictId","DistrictName",Model.DistrictID))"></select>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="">Pin Code </label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/adresss.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" asp-for="Pincode">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="">Area</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/city.svg" alt=""></span>
+                                </div>
+                                <select type="text" class="form-control" asp-for="Area" asp-items="@(new SelectList(ViewBag.Area,"PinLatLongId","PlaceName",Model.Area))"></select>
+
+                            </div>
+                        </div>
+
+                        <div id="divschooldetail" class="col-md-12"></div>
+
+
+                        <div class="col-md-12">
+                            <label for="">About the School</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/adresss.svg" alt=""></span>
+                                </div>
+                                <textarea id="txtAboutSchool" cols="30" rows="3" class="form-control" asp-for="AboutofSchool"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="bo-heading mt-2">Students and Staff Information</h5>
+                            <hr />
+                            <h5 data-toggle="tooltip" data-placement="bottom" title="Please consider entire students population of your school - KG to Grade 12 all inclusive" class="bo-heading mt-2">Students</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Total</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/adresss.svg" alt=""></span>
+                                </div>
+                                <input type="text" id="txttns"  class="form-control" asp-for="TotalNoofStudent" onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Female</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/female-studen.svg" alt=""></span>
+                                </div>
+                                @*<input type="text" id="txtnsf" class="form-control" asp-for="NoofStudentFemale" onblur="CheckTotalstudentval('txtnsf')" onkeydown="return ValidateNumber(event);" maxlength="6" />*@
+                                <input type="text" id="txtnsf" class="form-control" asp-for="NoofStudentFemale"  onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Male</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/male-Students.svg" alt="" onkeydown="return ValidateNumber(event);" maxlength="6"></span>
+                                </div>
+                                @*<input type="text" id="txtnsm" class="form-control" onblur="CheckTotalstudentval('txtnsm')" asp-for="NoofStudentMale" onkeydown="return ValidateNumber(event);" maxlength="6" />*@
+                                <input type="text" id="txtnsm" class="form-control"  asp-for="NoofStudentMale" onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Other</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/male-Students.svg" alt=""></span>
+                                </div>
+                                <input type="text" id="txtnso" class="form-control" asp-for="NoofStudentOther"  onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <hr />
+                            <h5 data-toggle="tooltip" data-placement="bottom" title="Please consider entire teaching population of your school - permanent and temporary teaching staff plus the Principal." class="bo-heading mt-2">Teaching staff</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Total</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/adresss.svg" alt=""></span>
+                                </div>
+                                <input type="text"  class="form-control" id="txttts" asp-for="TotalNoofTeachingStaff" onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Female</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/female-teacher.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" id="txttsf"  asp-for="NoofTeachingStaffFemale" onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <label for="">Male</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/teacher-male.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" id="txttsm"  asp-for="NoofTeachingStaffMale" onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Other</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/male-Students.svg" alt=""></span>
+                                </div>
+                                <input type="text" id="txtteachingOther" class="form-control" asp-for="NoofteachingOther"  onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <hr />
+                            <h5 data-toggle="tooltip" data-placement="bottom" title="Please consider administration, house keeping, canteen staff, management including leadership team." class="bo-heading mt-2">Non teaching staff</h5>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Total</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/adresss.svg" alt=""></span>
+                                </div>
+                                <input type="text"  class="form-control" asp-for="TotalNoofNonTeachingStaff" id="txttnts" onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Female</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/non-staff-female.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" asp-for="NoofNonTeachingStaffFemale"  id="txttntf" onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <label for="">Male</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/male-staff-member.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" asp-for="NoofNonTeachingStaffMale"  id="txttntm" onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="">Other</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/male-Students.svg" alt=""></span>
+                                </div>
+                                <input type="text" id="txtNonteachingOther" class="form-control" asp-for="NoofNonteachingOther"  onkeydown="return ValidateNumber(event);" maxlength="6" />
+                            </div>
+                        </div>
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-12">
+                            <h5>Type of School </h5>
+                        </div>
+
+                        @{
+                            foreach (var item in ViewBag.SchoolType)
+                            {
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" onchange="SaveChecked(1)" name="cbtypeofschool" value="@item.SclTypeId">@item.SchoolType
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <input asp-for="TypeOfSchool" type="hidden" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-12">
+                            <h5>Type of Curriculum followed </h5>
+                        </div>
+
+                        @{
+                            foreach (var item in ViewBag.SchoolCurriculum)
+                            {
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" onchange="SaveChecked(2)" name="cbtypeofcurriculum" value="@item.CurriculumId">@item.CurriculumType
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <input asp-for="TypeOfCurriculumFollowedOtherSpec" type="text" style="display:none;" />
+                        <input asp-for="TypeOfCurriculumFollowed" type="hidden" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-12">
+                            <h5 data-toggle="tooltip" data-placement="bottom" title="Please consider all the Grade 1 to 12 plus Kindergartan" class="bo-heading">Grade</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <label data-toggle="tooltip" data-placement="bottom" title="Lowest Grade of your School" for="">Starting</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span  class="input-group-text"><img src="/images/grade-up.svg" alt=""></span>
+                                </div>
+                                <select type="text" id="drpstartinggrade" asp-for="StartingGradeUp" class="form-control" asp-items="@(new SelectList(ViewBag.StartingGrade,"SchoolGradeId","Grade",Model.StartingGradeUp))"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label data-toggle="tooltip" data-placement="bottom" title="Highest Grade of your School " for=""> Upto</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/grade-up.svg" alt=""></span>
+                                </div>
+                                <select type="text" id="drpupto" class="form-control" asp-for="StartingGradeTo" asp-items="@(new SelectList(ViewBag.StartingGrade,"SchoolGradeId","Grade",Model.StartingGradeTo))"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-12">
+                            <h5 class="bo-heading">Language of Teaching</h5>
+                        </div>
+
+                        @foreach (var item in ViewBag.Language)
+                        {
+                            <div class="col-md-3">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" name="cblanguage" onchange="SaveChecked(3)" value="@item.LanguageId">@item.Language
+                                    </label>
+                                </div>
+                            </div>
+                        }
+                        <div class="col-md-2">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" id="chklangother" name="cblanguage" onchange="SaveChecked(3)" value="999">Other (If any)
+                                </label>
+                            </div>
+                        </div>
+                        <input asp-for="LanguageTeaching" type="hidden" />
+                        <div class="col-md-4">
+                            <input asp-for="LanguageTeachingOtherSpec" class="form-control" type="text" style="display:none;" />
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-5">
+                            <h5 class="bo-heading">
+                                Does your school have any existing clubs?
+                                <!----(For e.g. Eco club, Energy club, Sustainability club, etc.)If yes, please share some details --->
+                            </h5>
+
+                        </div>
+                        <div class="col-md-7">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" id="rdclubyesy" class="form-check-input" name="radclub" value="1" /> Yes
+                                </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="radclub" value="2" /> No
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12" id="divclub" style="display:none;">
+                            <div class="row">
+                                @foreach (var item in ViewBag.Club)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" name="cbclub" onchange="SaveChecked(4)" value="@item.SchoolClubId">@item.SchoolClub
+                                            </label>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" name="cbclub" onchange="SaveChecked(4)" value="999">Other (If any)
+                                        </label>
+                                    </div>
+                                </div>
+                                <input asp-for="SchoolExistingClubs" type="hidden" />
+                                <input asp-for="SchoolExistingClubsOther" type="text" style="display:none;" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-12">
+                            <label for="">School Website Link:</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/web.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" asp-for="LinkSchoolWebsite">
+                            </div>
+                        </div>
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-12">
+                            <h5 data-toggle="tooltip" data-placement="bottom" title="Please provide complete handles. E.g. <<all the three handles of Fairtrade India>>" class="bo-heading d-flex justify-content-between">Social Media Handles</h5>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <label for="">Facebook</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/facebook.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" name="facebooklink">
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-4">
+                            <label for="">Instagram</label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/instagram.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" name="instagramlink">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="">Twitter </label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/twitter.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" name="twitterlink">
+                            </div>
+                        </div>
+                        <div class="col-md-12"><hr /></div>
+                        <div class="col-md-12">
+                            <h5 class="bo-heading">Details of the designated school representative for the Fairtrade India Schools Programme</h5>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="">Name </label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/user-name.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" asp-for="Detailsofdesignated_Name">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label for="">Mobile </label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/mobile.svg" alt=""></span>
+                                </div>
+                                <input type="text" maxlength="10" onblur="validMobile()" onkeydown="return ValidateNumber(event);" class="form-control" asp-for="Detailsofdesignated_Mobile">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <label for="">Email </label>
+                            <div class="input-group mb-3 input-group-lg">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><img src="/images/email.svg" alt=""></span>
+                                </div>
+                                <input type="text" class="form-control" asp-for="Detailsofdesignated_Email">
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right mt-2">
+                            <input type="submit" class="btn btn-orang" value="Update" style="text-transform:uppercase;" />
+                        </div>
+                    </div>
+                    <div class="col-md-12"><hr /></div>
+                </form>
+            </div>
+        </div>
+
+
+        <div id="modalcolumnvisibility" class="modal" role="dialog" style="z-index: 999999999;">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title ModalAlert-title">Control access </h4>
+                        <button type="button" class="close" data-dismiss="modal" onclick="javascript:$('#modalcolumnvisibility').hide(500)">&times;</button>
+
+                    </div>
+                    <div class="modal-body ModalAlert-body" style="padding-bottom: 1px;">
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2" id="divcolumn">
+
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="button" value="Submit" onclick="SaveColumn()" class="btn btn-orang" style="text-transform:uppercase;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <h5 class="pull-left">Steering Committee</h5>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-right">
+                <a data-ajax="true"
+                   method="GET" class="btn btn-info btn-md pull-right toggle-tooltip"
+                   title="Click here, to add committe member details"
+                   data-ajax-update="#div-AddCommitteMemberPopUp" data-ajax-mode="replace"
+                   data-backdrop="static" data-keyboard="false"
+                   href="@Url.Action("AddCommitteDetails", "Login")"
+                   id="a_AddCommitte" data-toggle="modal" data-target="#divAddCommitteMember">
+                    Add Committe Member
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2" id="divCommitteDetails">
+                @*@await Html.PartialAsync("_CommitteGridViewDetails", Model.committeMemberList)*@
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                <h5 class="pull-left">
+                    Meeting Detail
+                </h5>
+            </div>
+            <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 text-right">
+                <a data-ajax="true"
+                   method="GET" class="btn btn-info btn-md pull-right toggle-tooltip" title="Click here, to add meeting details"
+                   data-ajax-update="#div-AddMeetingPopUp" data-ajax-mode="replace"
+                   data-backdrop="static" data-keyboard="false"
+                   href="@Url.Action("AddMeetingDetails", "Stage1STP2")"
+                   id="a_AddMeeting" data-toggle="modal" data-target="#divAddMeetingPopUp">
+                    Add Meeting
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-2" id="divMeetingDetails">
+
+                @*@await Html.PartialAsync("_MeetingGridView", Model.stage2DateOfMeetings)*@
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="divAddCommitteMember">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Committe Member Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form asp-action="PostCommitteMemberDetails" asp-controller="Login" data-ajax="true" data-ajax-method="POST"
+                      data-ajax-mode="replace" data-ajax-success="Stage2CommitteMemberSuccess">
+                    <!-- Modal body -->
+                    <div class="modal-body" id="div-AddCommitteMemberPopUp">
+
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="pull-right">
+                                    <div class="form-group">
+                                        <input type="submit" value="Save" class="btn btn-orang btn-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="divEditCommitteMember">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Committe Member Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form asp-action="EditCommitteMemberDetails" asp-controller="Login" data-ajax="true" data-ajax-method="POST"
+                      data-ajax-mode="replace" data-ajax-success="Stage2EditCommitteMemberSuccess">
+                    <!-- Modal body -->
+                    <div class="modal-body" id="div-EditCommitteMemberPopUp">
+
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="pull-right">
+                                    <div class="form-group">
+                                        <input type="submit" value="Save" class="btn btn-success btn-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="divAddMeetingPopUp">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Meeting Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form asp-action="PostMeetingDetails" asp-controller="Stage1STP2" data-ajax="true" data-ajax-method="POST"
+                      data-ajax-mode="replace" data-ajax-success="Stage2MeetingSuccess">
+                    <!-- Modal body -->
+                    <div class="modal-body" id="div-AddMeetingPopUp">
+
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="pull-right">
+                                    <div class="form-group">
+                                        <input type="submit" value="Save" class="btn btn-success btn-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="divEditMeetingPopUp">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Meeting Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <form asp-action="EditMeetingDetails" asp-controller="Stage1STP2" data-ajax="true" data-ajax-method="POST"
+                      data-ajax-mode="replace" data-ajax-success="Stage2EditMeetingSuccess">
+                    <!-- Modal body -->
+                    <div class="modal-body" id="div-EditMeetingPopUp">
+
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12">
+                                <div class="pull-right">
+                                    <div class="form-group">
+                                        <input type="submit" value="Update" class="btn btn-success btn-sm" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function Stage2CommitteMemberSuccess(data) {
+            debugger;
+            if (data.part == "1") {
+                alert(data.msg);
+                $("#divCommitteDetails").html(data.htmlData.result);
+                $("#divAddCommitteMember").modal("hide");
+            }
+            else if (data.part == "2") {
+                $("#div-AddCommitteMemberPopUp").html(data.htmlData.result);
+                $("#divAddCommitteMember").modal("show");
+            }
+        }
+
+        function Stage2EditCommitteMemberSuccess(data) {
+            if (data.part == "1") {
+                alert(data.msg);
+                $("#divCommitteDetails").html(data.htmlData.result);
+                $("#divEditCommitteMember").modal("hide");
+            }
+            else if (data.part == "2") {
+                $("#div-EditCommitteMemberPopUp").html(data.htmlData.result);
+                $("#divEditCommitteMember").modal("show");
+            }
+        }
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            SetCheckbox();
+            var items = "<option value='0'>Select</option>";
+            ShowHide(1);
+            $(':radio[name="radclub"]').change(function () {
+                ShowHide(1);
+            });
+
+
+            if ($.map($(':checkbox[name="cblanguage"]:checked'), function (n, i) {
+                return n.value;
+            }).indexOf('999') != -1) {
+                $('#LanguageTeachingOtherSpec').show();
+            }
+            else
+                $('#LanguageTeachingOtherSpec').hide();
+
+
+            $('#SchoolExistingClubs').val($.map($(':checkbox[name="cbclub"]:checked'), function (n, i) {
+                return n.value;
+            }).join(','));
+
+            if ($('#SchoolExistingClubs').val().length > 0) {
+
+                $("#rdclubyesy").prop('checked', true);
+                $('#divclub').show();
+            }
+            else {
+
+            }
+
+            if ($.map($(':checkbox[name="cbclub"]:checked'), function (n, i) {
+                return n.value;
+            }).indexOf('999') != -1) {
+                $('#SchoolExistingClubsOther').show();
+            }
+            else
+                $('#SchoolExistingClubsOther').hide();
+
+            $('#Pincode').blur(function () {
+                var url = '@Url.Content("~/")' + "Login/GetArea";
+                var ddlsource = "#Pincode";
+                $.getJSON(url, { pincode: $(ddlsource).val() }, function (data) {
+                    var areaitems = "<option value='0'>Select</option>";
+                    $("#Area").empty();
+                    $.each(data, function (i, area) {
+                        areaitems += "<option value='" + area.pinLatLongId + "'>" + area.placeName + "</option>";
+                    });
+                    $('#Area').html(areaitems);
+                });
+            });
+
+            $.getJSON('@Url.Content("~/")' + "Login/GetSocialHandles", { suid: @Model.SUID }, function (data) {
+                $.each(data, function (i, link) {
+                    if (link.socialMediaId == 1)
+                        $('input[name="facebooklink"]').val(link.socialMediaUrl);
+                    else if (link.socialMediaId == 2)
+                        $('input[name="instagramlink"]').val(link.socialMediaUrl);
+                    else if (link.socialMediaId == 3)
+                        $('input[name="twitterlink"]').val(link.socialMediaUrl);
+
+                });
+
+            });
+
+            $('#StateId').change(function () {
+                var url = '@Url.Content("~/")' + "Login/GetDistrict";
+                var ddlsource = "#StateId";
+                $.getJSON(url, { stateid: $(ddlsource).val() }, function (data) {
+                    var districtitems = "<option value='0'>Select</option>";
+                    $("#DistrictId").empty();
+                    $.each(data, function (i, district) {
+                        districtitems += "<option value='" + district.districtId + "'>" + district.districtName + "</option>";
+                    });
+                    $('#DistrictId').html(districtitems);
+                });
+            });
+
+            $('#SchoolEmail').blur(function () {
+                var regex = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+                if (!regex.test($('#SchoolEmail').val())) { $('#SchoolEmail').val(''); alert('Enter valid email.'); }
+            });
+
+            $('#DetailsofdesignatedEmail').blur(function () {
+                var regex = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+                if (!regex.test($('#DetailsofdesignatedEmail').val())) { $('#DetailsofdesignatedEmail').val(''); alert('Enter valid email.'); }
+            });
+
+            $('#SchoolCode').blur(function () {
+                var url = '@Url.Content("~/")' + "Login/GetSchoolDetail";
+                var ddlsource = "#SchoolCode";
+                $.getJSON(url, { udise: $(ddlsource).val() }, function (data) {
+                    var schooldetail = "";
+                    $.each(data, function (i, n) {
+                        schooldetail += "<div class='row'><div class='col-md-4'><label for= '' > School Name</label><div class='input-group mb-3 input-group-lg'><label for=''>" + n.schoolNmae + "</label></div></div><div class='col-md-4'><label for= '' > School Category</label><div class='input-group mb-3 input-group-lg'><label for=''>" + n.schoolCategory + "</label></div></div><div class='col-md-4'><label for= '' > School Management</label><div class='input-group mb-3 input-group-lg'><label for=''>" + n.schoolManagement +"</label></div></div></div>";
+                    });
+                    $('#divschooldetail').html(schooldetail);
+                });
+            });
+
+
+             $(".custom-file-input").on("change", function () {
+                debugger;
+                var fileName = $(this).val().split("\\").pop();
+                $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+                var fileUpload = $("#customFile").get(0);
+                var files = fileUpload.files[0];
+                var filesze = files.size;
+                var fileName = fileUpload.value;
+
+                // Create FormData object
+                var fileData = new FormData();
+                // Looping over all files and add it to FormData object
+                 fileData.append("MyUploaderSC", files);
+
+
+                $.ajax({
+                    url: "@Url.Action("UploadSchoolPicture", "Login")",
+                    type: "POST",
+                    contentType: false, // Not to set any content header
+                    processData: false, // Not to process data
+                    data: fileData,
+                    success: function (result) {
+                        if (result.fileName != "") {
+                            $("#SchoolPicturePath").attr("src", "/images/SchoolImageLogo/" + result.fileName);
+                        }
+                    },
+                    error: function (err) {
+                        alert(err.statusText);
+                    }
+                });
+             });
+
+            FillCommitteMemberDetails();
+            FillMeetingDetails();
+
+        });
+
+        function FillCommitteMemberDetails() {
+            $.ajax({
+                type: "GET",
+                url: "/Login/GetCommitteMemberDetails",
+                /*data: { "id": 1 },*/
+                success: function (response) {
+                    debugger;
+                    if (response != "") {
+                        $("#divCommitteDetails").html("");
+                        $("#divCommitteDetails").html(response);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+
+        function SaveChecked(flag) {
+            try {
+                if (flag == 1) {
+                    $('#TypeOfSchool').val($.map($(':checkbox[name="cbtypeofschool"]:checked'), function (n, i) {
+                        return n.value;
+                    }).join(','));
+                }
+                else if (flag == 2) {
+                    $('#TypeOfCurriculumFollowed').val($.map($(':checkbox[name="cbtypeofcurriculum"]:checked'), function (n, i) {
+                        return n.value;
+                    }).join(','));
+                    if ($.map($(':checkbox[name="cbtypeofcurriculum"]:checked'), function (n, i) {
+                        return n.value;
+                    }).indexOf('999') != -1) {
+                        $('#TypeOfCurriculumFollowedOtherSpec').show();
+                    }
+                    else
+                        $('#TypeOfCurriculumFollowedOtherSpec').hide();
+                }
+                else if (flag == 3) {
+                    $('#LanguageTeaching').val($.map($(':checkbox[name="cblanguage"]:checked'), function (n, i) {
+                        return n.value;
+                    }).join(','));
+                    if ($.map($(':checkbox[name="cblanguage"]:checked'), function (n, i) {
+                        return n.value;
+                    }).indexOf('999') != -1) {
+                        $('#LanguageTeachingOtherSpec').show();
+                    }
+                    else
+                        $('#LanguageTeachingOtherSpec').hide();
+                }
+                else if (flag == 4) {
+                    $('#SchoolExistingClubs').val($.map($(':checkbox[name="cbclub"]:checked'), function (n, i) {
+                        return n.value;
+                    }).join(','));
+                    if ($.map($(':checkbox[name="cbclub"]:checked'), function (n, i) {
+                        return n.value;
+                    }).indexOf('999') != -1) {
+                        $('#SchoolExistingClubsOther').show();
+                    }
+                    else
+                        $('#SchoolExistingClubsOther').hide();
+                }
+
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function ShowHide(flag) {
+            try {
+                if (flag == 1) {
+                    if ($(':radio[name="radclub"]:checked').val() == '1')
+                        $('#divclub').show();
+                    else
+                        $('#divclub').hide();
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function SetCheckbox() {
+            try {
+                $.each($('input[name="cbtypeofschool"]'), function (i, n) {
+                    if ($('#TypeOfSchool').val().split(',').indexOf($(n).val()) != -1) {
+                        $(n).prop('checked', true);
+                    }
+                });
+                $.each($('input[name="cbtypeofcurriculum"]'), function (i, n) {
+                    if ($('#TypeOfCurriculumFollowed').val().split(',').indexOf($(n).val()) != -1) {
+                        $(n).prop('checked', true);
+                    }
+                });
+                $.each($('input[name="cblanguage"]'), function (i, n) {
+                    if ($('#LanguageTeaching').val().split(',').indexOf($(n).val()) != -1) {
+                        $(n).prop('checked', true);
+                    }
+                });
+                $.each($('input[name="cbclub"]'), function (i, n) {
+                    if ($('#SchoolExistingClubs').val().split(',').indexOf($(n).val()) != -1) {
+                        $(n).prop('checked', true);
+                    }
+                });
+                if ($('#SchoolExistingClubs').val().length > 0) {
+
+                    $("input[type='radio'][name='radclub][value='1']").prop('checked', true);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        function CheckTotalstudentval(Currentidtxt) {
+
+            debugger;
+            if ($('#txttns').val() == '') {
+                $('#txttns').val(0);
+            }
+            if ($('#txtnsf').val() == '') {
+                $('#txtnsf').val(0);
+            }
+            if ($('#txtnsm').val() == '') {
+                $('#txtnsm').val(0);
+            }
+            if ($('#txtnso').val() == '') {
+                $('#txtnso').val(0);
+            }
+
+            var total = $('#txttns').val();
+            var additionst = parseFloat($('#txtnsf').val()) + parseFloat($('#txtnsm').val()) + parseFloat($('#txtnso').val());
+            $('#txttns').val(additionst);
+
+        }
+
+        function CheckTotalTeacherval(Currentidtxt) {
+
+
+
+            if ($('#txttts').val() == '') {
+                $('#txttts').val(0);
+            }
+            if ($('#txttsf').val() == '') {
+                $('#txttsf').val(0);
+            }
+            if ($('#txttsm').val() == '') {
+                $('#txttsm').val(0);
+            }
+            if ($('#txtteachingOther').val() == '') {
+                $('#txtteachingOther').val(0);
+            }
+
+            var total = $('#txttts').val();
+            var additionst = parseFloat($('#txttsf').val()) + parseFloat($('#txttsm').val()) + parseFloat($('#txtteachingOther').val());
+            $('#txttts').val(additionst);
+            //if (additionst > total) {
+
+            //    $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Total teaching staff validation failed", {
+            //        type: 'warning',
+            //        align: 'center',
+            //        width: 'auto',
+            //        allow_dismiss: true,
+            //        delay: 10000
+            //    });
+            //    $('#' + Currentidtxt + '').val('');
+            //    $('#' + Currentidtxt + '').focus();
+
+            //}
+        }
+
+        function CheckTotalNonTeacherval(Currentidtxt) {
+
+
+
+            if ($('#txttnts').val() == '') {
+                $('#txttnts').val(0);
+            }
+            if ($('#txttntf').val() == '') {
+                $('#txttntf').val(0);
+            }
+            if ($('#txttntm').val() == '') {
+                $('#txttntm').val(0);
+            }
+            if ($('#txtNonteachingOther').val() == '') {
+                $('#txtNonteachingOther').val(0);
+            }
+
+            var total = $('#txttnts').val();
+            var additionst = parseFloat($('#txttntf').val()) + parseFloat($('#txttntm').val()) + parseFloat($('#txtNonteachingOther').val());
+            $('#txttnts').val(additionst);
+            //if (additionst > total) {
+
+            //    $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Total  non-teaching staff validation failed", {
+            //        type: 'warning',
+            //        align: 'center',
+            //        width: 'auto',
+            //        allow_dismiss: true,
+            //        delay: 10000
+            //    });
+            //    $('#' + Currentidtxt + '').val('');
+            //    $('#' + Currentidtxt + '').focus();
+
+            //}
+        }
+
+        function ShowModal() {
+        $('#modalcolumnvisibility').modal('show');
+            FillColumn(1);
+
+        }
+
+        function FillColumn(id) {
+        $.ajax({
+            type: "POST",
+            url: "/Login/ColumnVisibilityData",
+            data: { "id": 1, "suid": parseInt(@ViewBag.Suid) },
+            success: function (response) {
+                if (JSON.parse(response).length > 0) {
+                    var arr = JSON.parse(response);
+                    var columnhtml = '';
+                    $.each(arr, function (i, n) {
+                        columnhtml += '<div class="form-check"><label class="form-check-label"><input type="checkbox" class="form-check-input"  name="cbcolumn"  ' + (n.Isvisible == 1 ? "checked=checked" : "") + ' id="CA' + n.Column + '" value="' + n.Column + '">' + n.Description + '</label></div>';
+
+                    });
+
+                    $('#divcolumn').html(columnhtml);
+                }
+            },
+            failure: function (response) {
+                alert(response.responseText);
+            },
+            error: function (response) {
+                alert(response.responseText);
+            }
+        });
+
+    }
+
+        function SaveColumn() {
+        try {
+            var model=[];
+            $('input[name="cbcolumn"]:checked').each(function (i,n) {
+                var modeljson = {};
+                modeljson["SUID"] = parseInt(@Context.Session.GetString("Suid"));
+                modeljson["Tableid"] = 1;
+                modeljson["Column"] = $(n).val();
+                model.push(modeljson);
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/Login/ColumnVisibilitySave",
+                data: { "mstTableColumnRights": model },
+                success: function (response) {
+
+                    $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i>Saved successfully.", {
+                        type: 'success',
+                        align: 'center',
+                        width: 'auto',
+                        allow_dismiss: true,
+                        delay: 5000
+                    });
+                    $('#modalcolumnvisibility').modal('hide');
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        } catch (e) {
+            console.log(e);
+        }
+        }
+
+        function FillMeetingDetails() {
+            $.ajax({
+                type: "GET",
+                url: "/Login/GetMeetingDetailsDetails",
+                /*data: { "id": 1 },*/
+                success: function (response) {
+                    debugger;
+                    if (response != "") {
+                        $("#divMeetingDetails").html("");
+                        $("#divMeetingDetails").html(response);
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }
+
+        function Stage2MeetingSuccess(data) {
+            if (data.part == "1") {
+                //$.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> " + data.msg + "", {
+                //    type: 'warning',
+                //    align: 'center',
+                //    width: 'auto',
+                //    allow_dismiss: true,
+                //    delay: 10000
+                //});
+                //$("#divMeetingDetails").html(data.htmlData.result);
+                //$("#divAddMeetingPopUp").modal("hide");
+                window.location.reload();
+            }
+            else if (data.part == "2") {
+                $("#div-AddMeetingPopUp").html(data.htmlData.result);
+                $("#divAddMeetingPopUp").modal("show");
+            }
+        }
+        function Stage2EditMeetingSuccess(data) {
+            if (data.part == "1") {
+                //$.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> " + data.msg + "", {
+                //    type: 'warning',
+                //    align: 'center',
+                //    width: 'auto',
+                //    allow_dismiss: true,
+                //    delay: 10000
+                //});
+                //$("#divMeetingDetails").html(data.htmlData.result);
+                //$("#divEditMeetingPopUp").modal("hide");
+                window.location.reload();
+            }
+            else if (data.part == "2") {
+                $("#div-EditMeetingPopUp").html(data.htmlData.result);
+                $("#divEditMeetingPopUp").modal("show");
+            }
+        }
+
+        function Stage2CommitteMemberSuccess(data) {
+            if (data.part == "1") {
+                //$.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> " + data.msg + "", {
+                //    type: 'warning',
+                //    align: 'center',
+                //    width: 'auto',
+                //    allow_dismiss: true,
+                //    delay: 10000
+                //});
+                //$("#divCommitteDetails").html(data.htmlData.result);
+                //$("#divAddCommitteMember").modal("hide");
+                window.location.reload();
+            }
+            else if (data.part == "2") {
+                $("#div-AddCommitteMemberPopUp").html(data.htmlData.result);
+                $("#divAddCommitteMember").modal("show");
+            }
+        }
+
+        function Stage2EditCommitteMemberSuccess(data) {
+            if (data.part == "1") {
+                //$.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> " + data.msg + "", {
+                //    type: 'warning',
+                //    align: 'center',
+                //    width: 'auto',
+                //    allow_dismiss: true,
+                //    delay: 10000
+                //});
+                //$("#divCommitteDetails").html(data.htmlData.result);
+                //$("#divEditCommitteMember").modal("hide");
+                window.location.reload();
+            }
+            else if (data.part == "2") {
+                $("#div-EditCommitteMemberPopUp").html(data.htmlData.result);
+                $("#divEditCommitteMember").modal("show");
+            }
+        }
+
+
+        //MeetingDate
+        function CheckPreviousDate(startctrlid, endctrlid, ctrlid) {
+
+
+            var startTime = $('#' + startctrlid + '').val();
+            var endTime = $('#' + endctrlid + '').val();
+
+            var st = minFromMidnight(startTime);
+            var et = minFromMidnight(endTime);
+            if (st > et) {
+                $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> End time always greater then start time.", {
+                    type: 'warning',
+                    align: 'center',
+                    width: 'auto',
+                    allow_dismiss: true,
+                    delay: 5000
+                });
+                $('#' + ctrlid + '').val('')
+            }
+
+
+            /*        var p = { "DateMeeting": $('#' + ctrlid + '').val() };*/
+
+            @* $.ajax({
+                url: "@Url.Action("CheckPreDate", "Stage1STP2")",
+                type: "POST",
+                data: p,
+                success: function (result) {
+                    if (result == "1") {
+                        $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Meeting date cannot be less then previous meeting date", {
+                            type: 'warning',
+                            align: 'center',
+                            width: 'auto',
+                            allow_dismiss: true,
+                            delay: 5000
+                        });
+                        $('#' + ctrlid + '').val('')
+                    }
+
+                },
+                error: function (err) {
+                    alert(err.statusText);
+                }
+            });*@
+
+
+
+    }
+        function minFromMidnight(tm) {
+            var ampm = tm.substr(-2);
+            var clk;
+            if (tm.length <= 6) {
+                clk = tm.substr(0, 4);
+            } else {
+                clk = tm.substr(0, 5);
+            }
+            var m = parseInt(clk.match(/\d+$/)[0], 10);
+            var h = parseInt(clk.match(/^\d+/)[0], 10);
+            h += (ampm.match(/pm/i)) ? 12 : 0;
+            return h * 60 + m;
+        }
+    </script>
+    <script>
+        $(function () {
+
+            $('#tblCommitGrid').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    'excelHtml5',
+                    'pdf'
+                ],
+                'paging': true,
+                'lengthChange': false,
+                "scrollX": true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+
+            });
+
+            $('#tblmeetingGrid').DataTable({
+                dom: 'lBfrtip',
+                buttons: [
+                    'excelHtml5',
+                    'pdf'
+                ],
+                'paging': true,
+                'lengthChange': false,
+                "scrollX": true,
+                'searching': true,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+
+            });
+        })
+    </script>
+</body>
+
+</html>
+

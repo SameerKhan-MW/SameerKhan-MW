@@ -1,0 +1,56 @@
+﻿@using SchoolProgramme
+@model CommitteMember
+
+<div class="form-group">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label asp-for="Name" class="control-label"></label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                <input asp-for="Name" class="form-control" type="text" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label asp-for="CategoryId" class="control-label"></label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.CategoryList, "id", "value"), "Select", new { @class = "custom-select" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label asp-for="RoleResponsibilities" class="control-label"></label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                <input asp-for="RoleResponsibilities" class="form-control" type="text" />
+                <span asp-validation-for="RoleResponsibilities" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <label asp-for="EmailId" class="control-label"></label>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            <div class="form-group">
+                <input asp-for="EmailId" class="form-control" type="text" />
+                <span asp-validation-for="EmailId" class="text-danger"></span>
+            </div>
+
+        </div>
+    </div>
+
+</div>

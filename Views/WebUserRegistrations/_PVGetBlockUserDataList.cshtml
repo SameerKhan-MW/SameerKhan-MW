@@ -1,0 +1,63 @@
+﻿
+@using Microsoft.AspNetCore.Http;
+@using SchoolProgramme
+
+@*@model IEnumerable<SchoolProgramme.Models.tblwebUserRegistration>*@
+
+@model WebUserRegistrationCollection
+
+<script type="text/javascript">
+    $(function () {
+        $('#BloDataList').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+
+            ],
+            'paging': true,
+            'lengthChange': false,
+            "scrollX": true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+
+        })
+    })
+</script>
+
+
+<table id="BloDataList1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>No Higher Primary School</th>
+            <th>No Secondary School</th>
+            <th>No Higher Secondary School</th>
+            <th>No Higher Primary Student</th>
+            <th>No Secondary Student</th>
+            <th>No Higher Secondary Student</th>
+            <th>Session Year</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int a = 1;
+            @foreach (var LRF in Model.BSCList)
+            {
+                <tr>
+                    <td>@a</td>
+                    <td>@LRF.NoHigherPrimarySchool</td>
+                    <td>@LRF.NoSecondarySchool</td>
+                    <td>@LRF.NoHigherSecondarySchool</td>
+                    <td>@LRF.NoHigherPrimaryStudent</td>
+                    <td>@LRF.NoSecondaryStudent</td>
+                    <td>@LRF.NoHigherSecondaryStudent</td>
+                    <td>@LRF.SessionYear</td>                   
+                </tr>
+                a += 1;
+            }
+        }
+    </tbody>
+</table>
+
+

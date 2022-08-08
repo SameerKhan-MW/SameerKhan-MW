@@ -1,0 +1,1016 @@
+﻿@model SchoolProgramme.Models.tblwebUserRegistration
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="~/Images/plll.jpg" type="image/x-icon" />
+    <title>Survey Registration</title>
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <link href="~/bootstrap-4.6.1-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/bootstrap-4.6.1-dist/css/bootstrap-grid.min.css" rel="stylesheet" />
+    <link href="~/bootstrap-4.6.1-dist/css/bootstrap-reboot.min.css" rel="stylesheet" />
+    <script src="~/bootstrap-4.6.1-dist/js/bootstrap.min.js"></script>
+    <script src="~/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/jquery.bootstrap-growl.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />  
+    <!-- DataTable -->
+    <link href="~/DataTables/DataTables-1.10.24/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    @*<script src="~/DataTables/jQuery-3.3.1/jquery-3.3.1.js"></script>*@
+    <script src="~/DataTables/DataTables-1.10.24/js/jquery.dataTables.js"></script>
+    <script src="~/DataTables/DataTables-1.10.24/js/dataTables.bootstrap4.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.3.1/js/buttons.html5.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+
+    <style type="text/css">
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+            background-color: #354ea0;
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #354ea0;
+            border-radius: 10px;
+        }
+
+            /* Handle on hover */
+            ::-webkit-scrollbar-thumb:hover {
+                background: #ff8c00;
+            }
+
+        .text-purple {
+            color: #6f42c1 !important;
+        }
+    </style>
+</head>
+<body>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="container-fluid" style="width:95%;">
+            <div class="row mt-2">
+                <div class="col-xl-12 col-lg-12">
+                    <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background: linear-gradient(22deg, #2b9ce8 6.5%, #441E95 94.27%); ">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <img src="~/Images/EElogo.png" alt="" class="img-fluid" style="width: 40px; margin-left: 10px;">
+                            </li>
+                            <li class="nav-item">
+                                <img src="~/Images/Ayysmanbharatt.png" alt="" class="img-fluid" style="width:40px;margin-left:10px;">
+                            </li>
+                            <li class="nav-item">
+                                <img src="~/Images/natinalmmlogo.png" alt="" class="img-fluid" style="width:40px;margin-left:10px;">
+                            </li>
+                            <li class="nav-item">
+                                <img src="~/Images/planlogf.png" alt="" class="img-fluid" style="width:40px;margin-left:10px;">
+                            </li>
+                            <li class="nav-item">
+                                <img src="~/Images/unfpalogo.png" alt="" class="img-fluid" style="width:40px;margin-left:10px;">
+                            </li>
+
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
+                            <li><a href="#" class="d-block btn btn-link text-white text-decoration-none" style="cursor:default;text-transform:uppercase;font-family:HelveticaNeue-thinCN,Arial,sans-serif;"><b>Welcome To Plan International School</b></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid" style="width:95%;">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-5">
+                    <h4 class="text-purple" style="margin-top:10px;">Survay Registration</h4>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-2">
+
+                </div>
+                <div class="col-xl-4 col-lg-4 col-5">
+                    <a asp-action="Index" class="btn btn-primary float-right mt-2"> Back to List</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>User Level</h6>
+                        <select id="Userlevel" name="Userlevel" class="form-control" onchange="UDISEList()" required>
+                            <option value="0">Select</option>
+                            <option value="District">District</option>
+                            <option value="Block">Block</option>
+                            <option value="School">School</option>
+                        </select>
+                        <span asp-validation-for="UserLevel" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>State</h6>
+                        <select asp-for="StateId" id="StateId" name="StateId" class="form-control" asp-items="ViewBag.StateId" required>
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>District</h6>
+                        <select asp-for="DistrictId" id="DistrictId" name="DistrictId" class="form-control" asp-items="ViewBag.DistrictId" required>
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>Block</h6>
+                        <select asp-for="BlockId" id="BlockId" name="BlockId" class="form-control" asp-items="ViewBag.BlockId" required>
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="Udshow">
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>UDISE</h6>
+                        <select asp-for="UDISEID" id="UDISEID" name="UDISEID" class="form-control" asp-items="ViewBag.UDISEID" onchange="UDISEGridShow()" required>
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-lg-9">
+                    <div id="UserUDISEshow"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>Designation</h6>
+                        <select asp-for="DesignationId" class="form-control" name="DesignationId" id="DesignationId" asp-items="ViewBag.DesignationId" onchange="WebRegList()" required>
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>Name</h6>
+                        <input asp-for="Name" class="form-control" placeholder="Enter Name" name="Name" id="Name" required />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>Gender</h6>
+                        <select asp-for="GenderId" class="form-control" asp-items="ViewBag.GenderId" name="GenderId" id="GenderId" required>
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>Mobile Number</h6>
+                        <input asp-for="MobileNumber" class="form-control" placeholder="Enter Mobile No." name="MobileNumber" id="MobileNumber" required maxlength="10" />
+                        <span asp-validation-for="MobileNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>Email</h6>
+                        <input asp-for="EmailId" class="form-control" placeholder="Enter Email" name="EmailId" id="EmailId" required />
+                        <span asp-validation-for="EmailId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>Session Year</h6>
+                        <select asp-for="SessionYear" class="form-control" asp-items="ViewBag.SessionYear" name="SessionYear" id="SessionYear" required>
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-3">
+                    <div class="form-group">
+                        <h6>Class</h6>
+                        <select asp-for="ClassId" class="form-control" asp-items="ViewBag.ClassId" name="ClassId" id="ClassId" required>
+                            <option value="0">Select</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <a class="btn btn-success float-right" onclick="SaveWebUser()" style="cursor:pointer;" id="btnSaveWebUser"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Submit</a>
+                        @*<input type="submit" value="Submit" class="btn btn-success float-right" onclick="GridWebshow()" />*@
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="PVWebUserList" class="w-100"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="WebUserListGrid" class="w-100"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="BlockQuesPopUP" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Block Question</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <h6>No Higher Primary School</h6>
+                                    <input type="text" class="form-control" placeholder="Please Enter Number" id="NHPS" required />
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <h6>No Secondary School</h6>
+                                    <input type="text" class="form-control" placeholder="Please Enter Number" id="NSS" required />
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <h6>No Higher Secondary School</h6>
+                                    <input type="text" class="form-control" placeholder="Please Enter Number" id="NHSS" required />
+
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <h6>No Higher Primary Student</h6>
+                                    <input type="text" class="form-control" placeholder="Please Enter Number" id="NHPStud" required />
+
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <h6>No Secondary Student</h6>
+                                    <input type="text" class="form-control" placeholder="Please Enter Number" id="NSStud" required />
+
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <h6>No Higher Secondary Student</h6>
+                                    <input type="text" class="form-control" placeholder="Please Enter Number" id="NHSStud" required />
+
+                                </div>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+                                    <h6>Session Year</h6>
+                                    <select class="form-control" asp-items="ViewBag.SessionYear" id="SYB" required>
+                                        <option value="0">Select</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+
+
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4">
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="float-right">
+                            <a class="btn btn-success" onclick="SaveBlockQues($('#hdWebRegUserID').val())" style="cursor:pointer;" id="btnSaveBlockQues"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;Save</a> &nbsp;
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <input type="hidden" id="hdWebRegUserID" />
+
+        <!-- Modal -->
+        <div class="modal fade" id="BlockQuesDataPopUP" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Block Question</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                        <div class="row">
+                        <div class="col-xl-12">
+                         <div id="BlockCountListGrid" class="w-100"></div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="float-right">                          
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> @ViewBag.Message", {
+            type: 'danger',
+                align: 'center',
+                width: 'auto',
+                offset: { from: 'top', amount:50 }, // 'top', or 'bottom'
+                allow_dismiss: true,
+                delay: 5000
+            });
+        </script>
+    }
+
+<script type="text/javascript">
+    $('#StateId').change(function () {
+             var url = '@Url.Content("~/")' + "WebUserRegistrations/GetDistrict";
+                    var ddlsource = "#StateId";
+                    $.getJSON(url, { stateid: $(ddlsource).val() }, function (data) {
+                    var districtitems = "<option value='0'>Select</option>";
+                    $("#DistrictId").empty();
+                        $("#BlockId").empty();
+                        $('#BlockId').append('<option value=0>Select</option>');
+                    $.each(data, function (i, district) {
+
+                    districtitems += "<option value='" + district.districtID + "'>" + district.district + "</option>";
+                    });
+                    $('#DistrictId').html(districtitems);
+                    });
+         });
+
+    $('#DistrictId').change(function () {
+        var url = '@Url.Content("~/")' + "WebUserRegistrations/GetBlock";
+                    var ddlsource = "#DistrictId";
+                    $.getJSON(url, { districtId: $(ddlsource).val() }, function (data) {
+                    var blockitems = "<option value='0'>Select</option>";
+                    $("#BlockId").empty();
+                    $.each(data, function (i, block) {
+                    blockitems += "<option value='" + block.blockID + "'>" + block.blockName + "</option>";
+                    });
+                    $('#BlockId').html(blockitems);
+                    });
+    });
+
+    $('#BlockId').change(function () {
+        var url = '@Url.Content("~/")' + "WebUserRegistrations/UDISECodes";
+        var ddlsource = "#BlockId";
+        $.getJSON(url, { blockID: $(ddlsource).val() }, function (data) {
+                    var blockitems = "<option value='0'>Select</option>";
+            $("#UDISEID").empty();
+
+                    $.each(data, function (i, block) {
+                        blockitems += "<option value='" + block.udiseid + "'>" + block.udise + "</option>";
+                    });
+            $('#UDISEID').html(blockitems);
+                    });
+    });
+
+    $('#Userlevel').change(function () {
+        var url = '@Url.Content("~/")' + "WebUserRegistrations/GetDesgnation";
+             var ddlsource = "#Userlevel";
+                    $.getJSON(url, { userlevelid: $(ddlsource).val() }, function (data) {
+                    var ulitems = "<option value='0'>Select</option>";
+                    $("#DesignationId").empty();
+                    $.each(data, function (i, ul) {
+
+                        ulitems += "<option value='" + ul.roleID + "'>" + ul.role + "</option>";
+                    });
+                        $('#DesignationId').html(ulitems);
+                    });
+         });
+
+    $(document).ready(function () {
+        $("#StateId").prop("disabled", true);
+        $("#DistrictId").prop("disabled", true);
+        $("#BlockId").prop("disabled", true);
+        $("#Udshow").hide();
+        $("#SessionYear").prop("disabled", true);
+        $("#ClassId").prop("disabled", true);
+    });
+
+    function UDISEList() {
+        var RoleID = $('#Userlevel').val();
+
+        if (RoleID == 'District')
+        {
+            $("#StateId").prop("disabled", false);
+            $("#DistrictId").prop("disabled", false);
+            $("#BlockId").prop("disabled", true);
+            $("#Udshow").hide();
+            $('#StateId').val(0);
+            $('#DistrictId').empty();
+            $('#DistrictId').append('<option value=0>Select</option>');
+            $("#BlockId").empty();
+            $('#BlockId').append('<option value=0>Select</option>');
+            $("#UDISEID").empty();
+            $('#UDISEID').append('<option value=0>Select</option>');
+            $("#SessionYear").prop("disabled", true);
+            $("#ClassId").prop("disabled", true);
+        }
+        else if (RoleID == 'Block') {
+            $("#StateId").prop("disabled", false);
+            $("#DistrictId").prop("disabled", false);
+            $("#BlockId").prop("disabled", false);
+            $("#Udshow").hide();
+            $('#StateId').val(0);
+            $('#DistrictId').empty();
+            $('#DistrictId').append('<option value=0>Select</option>');
+            $("#BlockId").empty();
+            $('#BlockId').append('<option value=0>Select</option>');
+            $("#UDISEID").empty();
+            $('#UDISEID').append('<option value=0>Select</option>');
+            $("#SessionYear").prop("disabled", true);
+            $("#ClassId").prop("disabled", true);
+        }
+        else if (RoleID == 'School') {
+            $("#StateId").prop("disabled", false);
+            $("#DistrictId").prop("disabled", false);
+            $("#BlockId").prop("disabled", false);
+            $("#Udshow").show();
+            $('#StateId').val(0);
+            $('#DistrictId').empty();
+            $('#DistrictId').append('<option value=0>Select</option>');
+            $("#BlockId").empty();
+            $('#BlockId').append('<option value=0>Select</option>');
+            $("#UDISEID").empty();
+            $('#UDISEID').append('<option value=0>Select</option>');
+            $("#SessionYear").prop("disabled", false);
+            $("#ClassId").prop("disabled", false);
+        }
+        else if (RoleID == 0) {
+            $("#StateId").prop("disabled", true);
+            $("#DistrictId").prop("disabled", true);
+            $("#BlockId").prop("disabled", true);
+            $("#Udshow").hide();
+            $('#StateId').val(0);
+            $('#DistrictId').empty();
+            $('#DistrictId').append('<option value=0>Select</option>');
+            $("#BlockId").empty();
+            $('#BlockId').append('<option value=0>Select</option>');
+            $("#UDISEID").empty();
+            $("#SessionYear").prop("disabled", true);
+            $("#ClassId").prop("disabled", true);
+           $('#UDISEID').append('<option value=0>Select</option>');
+            $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Select User Level", {
+                type: 'warning',
+                align: 'center',
+                width: 'auto',
+                offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                allow_dismiss: true,
+                delay: 3000
+            });
+
+        }
+        else {
+
+        }
+
+    }
+
+    function UDISEGridShow()
+    {
+        var UDISEID = $('#UDISEID').val();
+
+        var p = { "UDISEID": UDISEID};
+         $.ajax({
+             url: '@Url.Content("~/")' + "WebUserRegistrations/UDISEGridShow", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result) {
+                if (result.length > 0)
+                {
+                    var loc = "<table class='table table-striped table-bordered cell-border'><thead><tr><th>SchoolName</th><th>Address</th></tr></thead><tbody>";
+                        $.each(result, function (i, n) {
+                            loc += "<tr><td>" + n.schoolName + "</td><td>" + n.address + "</td></tr>";
+                        })
+                        loc += "</tbody></table>";
+                        $('#UserUDISEshow').html(loc);
+                }
+                else
+                {
+                    var loc = "<table class='table table-striped table-bordered cell-border'><thead><tr><th>SchoolName</th><th>Address</th></tr></thead><tbody>";
+                    $.each(result, function (i, n) {
+                        loc += "<tr><td colspan='2'>No Data Found</td></tr>";
+                    })
+                    loc += "<tr><td colspan='2'>No Data Found</td></tr>";
+                    loc += "</tbody></table>";
+                    $('#UserUDISEshow').html(loc);
+                    $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Select UDISE", {
+                        type: 'warning',
+                        align: 'center',
+                        width: 'auto',
+                        offset: { from: 'top', amount: 50 }, // 'top', or 'bottom'
+                        allow_dismiss: true,
+                        delay: 3000
+                    });
+                }
+            }
+        });
+
+    }
+    function WebRegList()
+    {
+        var DesginationID = $('#DesignationId').val();
+        var DistrictID = $('#DistrictId').val();
+        var BlockID = $('#BlockId').val();
+        var UDISEID = $('#UDISEID').val();
+        var UserLevel = $('#Userlevel').val();
+
+        var p = { "DesginationID": DesginationID, "DistrictID": DistrictID, "BlockID": BlockID, "UDISEID": UDISEID, "UserLevel": UserLevel};
+         $.ajax({
+             url: '@Url.Content("~/")' + "WebUserRegistrations/WebRegList", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result) {
+                if (result.length > 0)
+                {
+                    $('#PVWebUserList').html(result);
+                }
+                else
+                {
+
+                }
+            }
+        });
+
+    }
+
+    function GridWebshow()
+    {
+        var DesginationID = $('#DesignationId').val();
+
+        var p = { "DesginationID": DesginationID};
+         $.ajax({
+             url: '@Url.Content("~/")' + "WebUserRegistrations/WebRegList", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result) {
+                if (result.length > 0)
+                {
+                    $('#PVWebUserList').html(result);
+                }
+                else
+                {
+
+                }
+            }
+        });
+
+    }
+
+
+    function SaveWebUser()
+    {
+        var Userlevel = $('#Userlevel').val();
+        var StateId = $('#StateId').val();
+        var DistrictId = $('#DistrictId').val();
+        var BlockId = $('#BlockId').val();
+        var UDISEID = $('#UDISEID').val();
+        var DesginationID = $('#DesignationId').val();
+        var Name = $('#Name').val();
+        var GenderId = $('#GenderId').val();
+        var MobileNumber = $('#MobileNumber').val();
+        var EmailId = $('#EmailId').val();
+        var SessionYear = $('#SessionYear').val();
+        var ClassId = $('#ClassId').val();
+
+        if (Userlevel != 0)
+        {
+            if (StateId != 0) {
+
+               if (DistrictId != 0)
+                {
+                   if (DesginationID != 0)
+                    {
+                      if (Name!= "")
+                      {
+                        if (GenderId != 0) {
+
+                            if (MobileNumber != "")
+                            {
+                                if (EmailId != "")
+                                {
+                                    var p = { "Userlevel": Userlevel, "StateId": StateId, "DistrictId": DistrictId, "BlockId": BlockId, "UDISEID": UDISEID, "DesginationID": DesginationID, "Name": Name, "GenderId": GenderId, "MobileNumber": MobileNumber, "EmailId": EmailId, "SessionYear": SessionYear, "ClassId": ClassId};
+                                     $.ajax({
+                                         url: '@Url.Content("~/")' + "WebUserRegistrations/SaveWebUser", //Your path should be here
+                                        type: "POST",
+                                        data: p,
+                                        success: function (result) {
+                                            if (result.length > 0)
+                                            {
+                                                $('#PVWebUserList').html(result);
+                                                $('#Userlevel').val(0);
+                                                $('#StateId').val(0);
+                                                $("#StateId").prop("disabled", true);
+                                                $('#DistrictId').empty();
+                                                $('#DistrictId').append('<option value=0>Select</option>');
+                                                $("#DistrictId").prop("disabled", true);
+                                                $("#BlockId").empty();
+                                                $('#BlockId').append('<option value=0>Select</option>');
+                                                $("#BlockId").prop("disabled", true);
+                                                $("#UDISEID").empty();
+                                                $('#UDISEID').append('<option value=0>Select</option>');
+                                                $('#DesignationId').val(0);
+                                                $('#Name').val("");
+                                                $('#GenderId').val(0);
+                                                $('#MobileNumber').val("");
+                                                $('#EmailId').val("");
+                                                $('#SessionYear').val(0);
+                                                $('#ClassId').val(0);
+                                                $("#Udshow").hide();
+                                                $("#SessionYear").prop("disabled", true);
+                                                $("#ClassId").prop("disabled", true);
+                                                $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Succesfully Submit", {
+                                                    type: 'success',
+                                                    align: 'center',
+                                                    width: 'auto',
+                                                    offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                                                    allow_dismiss: true,
+                                                    delay: 3000
+                                                });
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        }
+                                    });
+                                }
+                                else {
+                                    $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter Email", {
+                                        type: 'danger',
+                                        align: 'center',
+                                        width: 'auto',
+                                        offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                                        allow_dismiss: true,
+                                        delay: 1000
+                                    });
+                                }
+
+
+                            }
+                            else {
+                                $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter Mobile Number", {
+                                    type: 'danger',
+                                    align: 'center',
+                                    width: 'auto',
+                                    offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                                    allow_dismiss: true,
+                                    delay: 1000
+                                });
+                            }
+
+                        }
+                        else {
+                            $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Select Gender", {
+                                type: 'danger',
+                                align: 'center',
+                                width: 'auto',
+                                offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                                allow_dismiss: true,
+                                delay: 1000
+                            });
+                        }
+
+                    }
+                        else
+                        {
+                          $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter Name", {
+                                type: 'danger',
+                                align: 'center',
+                                width: 'auto',
+                                offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                                allow_dismiss: true,
+                                delay: 1000
+                            });
+                        }
+                    }
+                    else
+                    {
+                       $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Select Desgination", {
+                            type: 'danger',
+                            align: 'center',
+                            width: 'auto',
+                            offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                            allow_dismiss: true,
+                            delay: 1000
+                        });
+                    }
+                }
+                else
+                {
+                    $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Select District", {
+                        type: 'danger',
+                        align: 'center',
+                        width: 'auto',
+                        offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                        allow_dismiss: true,
+                        delay: 1000
+                    });
+                }
+            }
+            else
+            {
+                $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Select State", {
+                    type: 'danger',
+                    align: 'center',
+                    width: 'auto',
+                    offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                    allow_dismiss: true,
+                    delay: 1000
+                });
+            }
+        }
+        else
+        {
+            $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Select User Level", {
+                type: 'danger',
+                align: 'center',
+                width: 'auto',
+                offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                allow_dismiss: true,
+                delay: 1000
+            });
+        }
+
+
+
+    }
+
+    $('#EmailId').blur(function () {
+        if ($('#EmailId').val() != "") {
+            var regex = /^([a-zA-Z0-9_\.\-\+])+\@@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regex.test($('#EmailId').val())) {
+                $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter valid Email", {
+                    type: 'danger',
+                    align: 'center',
+                    width: 'auto',
+                    offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                    allow_dismiss: true,
+                    delay: 1000
+                });
+                // alert('Please Enter valid Email Id');
+                return false;
+            }
+        }
+    });
+
+    $('#MobileNumber').keypress(function (e) {
+        var arr = [];
+        var kk = e.which;
+        for (i = 48; i < 58; i++)
+            arr.push(i);
+        if (!(arr.indexOf(kk) >= 0))
+            e.preventDefault();
+    });
+    $('#MobileNumber').blur(function () {
+        if ($("#MobileNumber").val() == "") {
+            $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please enter Mobile Number", {
+                type: 'danger',
+                align: 'center',
+                width: 'auto',
+                offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                allow_dismiss: true,
+                delay: 1000
+            });
+        }
+        else {
+            var mob = /^[6-9]{1}[0-9]{9}$/;
+            var mobile = $("#MobileNumber").val();
+            if ($("#MobileNumber").val().length < 10 && mob.test(mobile) == false) {
+                $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please enter valid Mobile Number", {
+                    type: 'danger',
+                    align: 'center',
+                    width: 'auto',
+                    offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                    allow_dismiss: true,
+                    delay: 1000
+                });
+                return false;
+            }
+        }
+    });
+
+
+    $('#Name').on('keypress', function (event) {
+        var regex = new RegExp("^[a-zA-Z ]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+    });
+    function BlockQues(UserRegistrationID)
+    {
+        debugger;
+        var UserRegWebID = UserRegistrationID;
+
+        $('#hdWebRegUserID').val(UserRegWebID);
+
+        $('#BlockQuesPopUP').modal('toggle');
+    }
+
+    function SaveBlockQues(UserRegistrationID)
+    {
+        debugger;
+        var StateId = $('#StateId').val();
+        var DistrictId = $('#DistrictId').val();
+        var BlockId = $('#BlockId').val();
+        var NoHigherPrimarySchool = $('#NHPS').val();
+        var NoSecondarySchool = $('#NSS').val();
+        var NoHigherSecondarySchool = $('#NHSS').val();
+        var NoHigherPrimaryStudent = $('#NHPStud').val();
+        var NoSecondaryStudent = $('#NSStud').val();
+        var NoHigherSecondaryStudent = $('#NHSStud').val();
+        var SessionYear = $('#SYB').val();
+
+
+        if (NoHigherPrimarySchool != 0)
+        {
+            if (NoSecondarySchool != 0)
+            {
+                if (NoHigherSecondarySchool != 0)
+                {
+                    if (NoHigherPrimaryStudent != 0)
+                    {
+                        if (NoHigherSecondaryStudent != 0)
+                        {
+                            if (SessionYear != 0)
+                            {
+                                var p = { "UserRegistrationID": UserRegistrationID, "StateId": StateId, "DistrictId": DistrictId, "BlockId": BlockId, "NoHigherPrimarySchool": NoHigherPrimarySchool, "NoSecondarySchool": NoSecondarySchool, "NoHigherSecondarySchool": NoHigherSecondarySchool, "NoHigherPrimaryStudent": NoHigherPrimaryStudent, "NoSecondaryStudent": NoSecondaryStudent, "NoHigherSecondaryStudent": NoHigherSecondaryStudent, "SessionYear": SessionYear};
+                                     $.ajax({
+                                         url: '@Url.Content("~/")' + "WebUserRegistrations/SaveBlockQues", //Your path should be here
+                                        type: "POST",
+                                        data: p,
+                                        success: function (result) {
+                                            if (result.length > 0)
+                                            {
+
+                                                $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Succesfully Save Block Questions", {
+                                                    type: 'success',
+                                                    align: 'center',
+                                                    width: 'auto',
+                                                    offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                                                    allow_dismiss: true,
+                                                    delay: 3000
+                                                });
+                                                $('#BlockQuesPopUP').modal('toggle');
+
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        }
+                                    });
+                            }
+                            else {
+                                $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Select SessionYear", {
+                                    type: 'danger',
+                                    align: 'center',
+                                    width: 'auto',
+                                    offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                                    allow_dismiss: true,
+                                    delay: 1000
+                                });
+                            }
+
+                        }
+                        else {
+                            $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter No Higher Secondary Student", {
+                                type: 'danger',
+                                align: 'center',
+                                width: 'auto',
+                                offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                                allow_dismiss: true,
+                                delay: 1000
+                            });
+                        }
+
+                    }
+                    else {
+                        $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter No Higher Primary Student", {
+                            type: 'danger',
+                            align: 'center',
+                            width: 'auto',
+                            offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                            allow_dismiss: true,
+                            delay: 1000
+                        });
+                    }
+                }
+                else {
+                    $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter No Higher Secondary School", {
+                        type: 'danger',
+                        align: 'center',
+                        width: 'auto',
+                        offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                        allow_dismiss: true,
+                        delay: 1000
+                    });
+                }
+            }
+            else {
+                $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter No Secondary School", {
+                    type: 'danger',
+                    align: 'center',
+                    width: 'auto',
+                    offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                    allow_dismiss: true,
+                    delay: 1000
+                });
+            }
+        }
+        else {
+            $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Please Enter No Higher Primary School", {
+                type: 'danger',
+                align: 'center',
+                width: 'auto',
+                offset: { from: 'top', amount: 70 }, // 'top', or 'bottom'
+                allow_dismiss: true,
+                delay: 1000
+            });
+        }
+    }
+
+    function BlockQuesDatashow(UserRegistrationID)
+    {
+        debugger;
+        var UserRegWebID = UserRegistrationID;
+
+        var p = { "UserRegWebID": UserRegWebID};
+         $.ajax({
+             url: '@Url.Content("~/")' + "WebUserRegistrations/BlockQuesDatashow", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result) {
+                if (result.length > 0)
+                {
+                    $('#BlockCountListGrid').html(result);
+
+                    $('#BlockQuesDataPopUP').modal('toggle');
+                }
+                else
+                {
+
+                }
+            }
+        });
+
+    }
+
+</script>
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+</body>
+</html>

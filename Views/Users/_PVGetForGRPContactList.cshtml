@@ -1,0 +1,81 @@
+﻿
+@using Microsoft.AspNetCore.Http;
+@using SchoolProgramme
+
+@model UserCommonModel
+
+@{ 
+//var edit = TempData["EditRight"] == null ? false : (bool)TempData["EditRight"];
+//TempData.Keep("EditRight");
+
+}
+<style>
+    .dataTables_wrapper
+    {
+        width:100%;
+    }
+</style>
+
+  
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div style="height:400px;overflow-x:hidden;overflow-y:scroll;width:100%;padding:5px;">
+                        <table id="tblContactList" class="table table-bordered table-striped w-100">
+                            <thead>
+                                <tr>
+                                    <th> <input type="checkbox" name="Check_ctr" value="yes" onClick="checkAll(this)" /></th>
+                                    <th>State</th>
+                                    <th>District</th>
+                                    <th>Block</th>
+                                    <th>UDISE</th>
+                                    <th>School Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var LRF in Model.LSTUDISE_Code)
+                                {
+                                    <tr style="font-size:14px">
+                                        <td>
+                                            @if (Model.LSTUserSchoolMap.Where(p => p.UdiseID == @LRF.UDISEID).Count() > 0)
+                                            {
+                                                <input type="checkbox" value="@LRF.UDISEID" id="chk_@LRF.UDISEID" disabled />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" value="@LRF.UDISEID" id="chk_@LRF.UDISEID" />
+                                            }
+
+
+                                        </td>
+                                        <td>@LRF.State.StateName</td>
+                                        <td>@LRF.District.District</td>
+                                        <td>@LRF.Block.BlockName</td>
+                                        <td>@LRF.UDISE</td>
+                                        <td>@LRF.SchoolName</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+                </div>
+
+<script>
+    $(function ()
+    {       
+        $('#tblContactList').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+                
+            ],          
+            'paging': false,
+            'lengthChange': false,
+            "scrollX": true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true
+        })
+    })
+
+</script>

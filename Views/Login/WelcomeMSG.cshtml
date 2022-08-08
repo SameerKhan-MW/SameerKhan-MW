@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Welcome on board!";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/cutom.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="~/js/ValidationCM.js"></script>
+    <script src="~/js/jquery.bootstrap-growl.js"></script>
+    <style type="text/css">
+        @@font-face {
+            font-family: VeneerThree;
+            src: url(../fonts/VeneerThree.otf);
+        }
+
+        @@font-face {
+            font-family: 'HelveticaNeue-BoldCN';
+            src: url('../fonts/HelveticaNeueLTStd-BdCn.otf') format('truetype');
+        }
+
+        .fontHdcd {
+            font-family: 'HelveticaNeue-BoldCN';
+        }
+
+        .font-style-hd_1 {
+            font-family: VeneerThree !important;
+            color: #333;
+            font-weight: 400;
+        }
+
+        .mdown {
+            margin-top: 20%
+        }
+
+        @@media (max-width: 991px) {
+            .mdown {
+                margin-top: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-main-wrp">
+        <div class="row new-lg">
+            <div class="col-md-12 col-lg-4">
+                <div class="left-side-sc">
+                    <figure>
+                        <a href="@Url.Action("Index","Home")">
+                            <div class="pic-ft">
+                                <img src="~/Images/logo.jpg" alt="">
+                            </div>
+                        </a>
+
+                    </figure>
+                </div>
+
+            </div>
+            <div class="col-md-12 col-lg-8">
+                <div class="right-side-sc mdown">
+                    <div class="p-xl-5 p-xs-2 p-5">
+                        <h2 class="font-style-hd_1">Dear @Context.Session.GetString("WLSCName") </h2>
+                        <h4 class="fontHdcd">Welcome on board!</h4>
+                        <h4 class="fontHdcd">Thank you for successfully registering for Fairtrade India Schools Programme. Fairtrade India Team will review your registration. Once approved by Fairtrade India team your will receive your credentials on email provided during the registration process.</h4>
+                        <h4 class="fontHdcd">Congratulations on joining the global Fairtrade Movement.</h4>
+                        <br />
+                        <a href="/Login/Login" class="btn btn-primary">Click to Login »</a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+<script>
+
+    $(document).ready(function () {
+
+        /*$('#ModalShowMailDetail').modal('toggle');*/
+    });
+    function Copytoclipboard() {
+        /* Get the text field */
+        var copyText = document.getElementById("hdlearneraudittxt");
+
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
+
+        /* Alert the copied text */
+        alert("Copied the text: " + copyText.value);
+    }
+
+</script>

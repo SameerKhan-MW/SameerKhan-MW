@@ -1,0 +1,64 @@
+﻿
+@using Microsoft.AspNetCore.Http;
+@using SchoolProgramme
+
+@model IEnumerable<SchoolProgramme.Models.tblwebUserRegistration>
+
+<script type="text/javascript">
+    $(function () {
+        $('#DisList').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+                
+            ],
+            'paging': true,
+            'lengthChange': false,
+            "scrollX": true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+
+        })
+    })
+</script>
+
+
+<table id="DisList" class="table table-bordered table-striped w-100">
+    <thead>
+        <tr>
+            <th>S.No</th>
+            <th>User Level</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Designation</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Mobile</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int a = 1;
+            @foreach (var LRF in Model)
+            {
+                <tr>
+                    <td>@a</td>
+                    <td>@LRF.UserLevel</td>
+                    <td>@LRF.State.StateName</td>
+                    <td>@LRF.District.District</td>
+                    <td>@LRF.Designation.Role</td>
+                    <td>@LRF.Name</td>
+                    <td>@LRF.Gender.Gender</td>
+                    <td>@LRF.MobileNumber</td>
+                    <td>@LRF.EmailId</td>
+                </tr>
+                a += 1;
+            }
+        }
+    </tbody>
+</table>
+
+
+

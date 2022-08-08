@@ -1,0 +1,140 @@
+﻿@model IEnumerable<SchoolProgramme.Models.RoleMenu>
+
+
+
+
+    <hr>
+    @*<ul id="myUL">*@
+        <table class="table table-bordered table-striped" style="background-color:white;">
+            <thead>
+                <tr>
+                    <th>Menu</th>
+                    <th>Display</th>
+                    <th>Add</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var menuHeader in Model.Where(m => m.Menu.IsDeleted == false && m.Menu.MenuType == 4).OrderBy(p => p.Menu.MenuSequence))
+                {
+                    <tr>
+                        <td style="width:27%;">
+                            @if (@menuHeader.Menu.MenuParentID == 0)
+                            {
+                                <b> @menuHeader.Menu.Menu</b>
+                            }
+                            else
+                            {
+                                @menuHeader.Menu.Menu
+                            }
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="label-switch switch-primary">
+                                        <input id="DS_@menuHeader.MenuID" type="checkbox" checked="@menuHeader.Display" class="switch-square switch-bootstrap status">
+                                        <span class="lable"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="label-switch switch-primary">
+                                        <input id="AD_@menuHeader.MenuID" type="checkbox" checked="@menuHeader.AddNew" class="switch-square switch-bootstrap status">
+                                        <span class="lable"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="label-switch switch-primary">
+                                        <input id="ED_@menuHeader.MenuID" type="checkbox" checked="@menuHeader.Edit" class="switch-square switch-bootstrap status">
+                                        <span class="lable"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label class="label-switch switch-primary">
+                                        @if (menuHeader.IsDeleted == false)
+                                        {
+                                            <input id="DL_@menuHeader.MenuID" type="checkbox" class="switch-square switch-bootstrap status">
+                                        }
+                                        else
+                                        {
+                                            <input id="DL_@menuHeader.MenuID" type="checkbox" checked class="switch-square switch-bootstrap status">
+                                        }
+                                        <span class="lable"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" onclick="SaveUserRights('DS_@menuHeader.MenuID','AD_@menuHeader.MenuID','ED_@menuHeader.MenuID','DL_@menuHeader.MenuID',@menuHeader.RoleMenuID,@menuHeader.Menu.MenuParentID,@menuHeader.RoleID);" style="cursor:pointer;color:white"><i class="fa fa-save"></i>  Save</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    @*</ul>*@ 
+
+
+
+<script src="~/js/jquery.bootstrap-growl.js"></script>
+<script type="text/javascript">
+
+    function SaveUserRights(DS, AD, ED, DL, RoleMenuId,MenuParentid,roleid) {
+        debugger;
+        var DSP = false;
+        if ($('#'+ DS +'').prop('checked') == true)
+            DSP = true;
+
+        var ADP = false;
+        if ($('#' + AD + '').prop('checked') == true)
+            ADP = true;
+
+        var EDP = false;
+        if ($('#' + ED + '').prop('checked') == true)
+            EDP = true;
+
+        var DLP = false;
+        if ($('#' + DL + '').prop('checked') == true)
+            DLP = true;
+
+
+        var p = { "DSN": DSP, "ADN": ADP, "EDN": EDP, "DLN": DLP, "RoleMenuIdN": RoleMenuId, "MenuParentid": MenuParentid, "roleid": roleid, "Flag":"Admin"  };
+        $.ajax({
+            url: '@Url.Content("/")' + "UserRight/SaveUserRights", //Your path should be here
+            type: "POST",
+            data: p,
+            async: false,
+            success: function (result) {
+                $("#DVRenderMenuList").html('');
+                $("#DVRenderMenuList").html(result);
+                $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> UPDATE SUCCESSFULLY.", {
+                    type: 'info',
+                    align: 'center',
+                    width: 'auto',
+                    allow_dismiss: true,
+                    delay: 10000
+                });
+
+                var url = '@Url.Content("~/")' + "UserRight/AssignRightsToRole";
+                         window.location.href = url;
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+            }
+        });
+    }
+</script>

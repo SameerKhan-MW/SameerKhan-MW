@@ -1,0 +1,349 @@
+﻿
+@using Microsoft.AspNetCore.Http;
+@using SchoolProgramme
+@model SchoolProgramme.Models.UserCommonModel
+@{
+    ViewData["Title"] = "AssignSchool";
+    Layout = "~/Views/Shared/_LayoutAdminLTEAdmin.cshtml";
+}
+
+
+<form asp-action="AssignSchool">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" value="@ViewData["UseriD"]" id="UserID" />
+    <section id="AboutSection" class="mt-4 mb-4">
+
+        <div class="row">
+            <div class="col-xl-2 col-lg-2">
+                <h4 class="text-purple" style="margin-top:15px;">Assign School</h4>
+            </div>
+            <div class="col-xl-8 col-lg-8">
+                <table class="table table-borderless mb-0">
+                    <tr>
+                        <td><h6 class="pull-right mt-2">State</h6></td>
+                        <td style="width:35%">
+                            <select type="text" required id="StateID" class="form-control" asp-items="@ViewBag.StateID">
+                                <option value="0">Select</option>*
+                            </select>
+                        </td>
+                        <td>
+                            <h6 class="pull-right mt-2">District</h6>
+                        </td>
+                        <td style="width:35%">
+                            <select type="text" required class="form-control" id="DistrictID" name="DistrictID" asp-items="ViewBag.DistrictID">
+                                <option value="0">Select</option>
+                            </select>
+                        </td>
+                        <td>
+                            <h6 class="pull-right mt-2">Block</h6>
+                        </td>
+                        <td style="width:35%">
+                            <select id="BlockID" name="BlockID" class="form-control" asp-items="ViewBag.BlockID" required>
+                                <option value="0">Select</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success savebutton" onclick="FillBlockList()"><i class="fa fa-search"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-xl-2 col-lg-2">
+                <div class="pull-right">
+
+                    @*@if (add)
+                    {
+                    <a asp-action="Create" class="btn btn-primary backtodetailbutton">Add New Block</a>@item.UserID
+                    }*@
+                    <a asp-action="Index" class="btn btn-primary backtodetailbutton mt-2">Back to List</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <hr />
+            </div>
+        </div>
+        <div id="DVLINKLIST" class="w-100"></div>    
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <h6 id="headingAssign" style="position:absolute;left:40%;top:10px;" class="text-purple"></h6>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-xl-12 col-lg-12">
+                <div id="divAssignGrid">
+                    <table id="tblServiceAskFor" class="table table-bordered" style="width:100%;font-size:14px;"></table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <input type="hidden" id="hdUserID" />
+    <div id="ModalshowSchoolMmberList" class="modal fade" tabindex="-1" role="dialog"
+         aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetUserLocation();
+        $('#headingAssign').text("Assigned School List");
+
+        });
+    function GetUserLocation() {
+        //debugger;
+        var UserID = $('#UserID').val();
+        var p = { "UserId": UserID };
+                        $.ajax({
+                            url: '@Url.Content("~/")' + "Users/GetAssignSchoolShow", //Your path should be here
+                            type: "POST",
+                            data: p,
+                            success: function (result) {
+                                if (result.length > 0)
+                                {
+                                    var responses = JSON.parse(result)
+                                    if (responses != '0') {
+                                        if ($.fn.DataTable.isDataTable('#tblServiceAskFor')) {
+                                            $('#tblServiceAskFor').DataTable().destroy();
+                                            $('#tblServiceAskFor').empty();
+                                        }
+                                        $("<thead><tr><th>S.NO.</th><th>State</th><th>District</th><th>Block</th><th>UDISE</th><th>School Name</th><th>Action</th></tr></thead>").appendTo($('#tblServiceAskFor'));
+                                        $('#tblServiceAskFor').DataTable({
+                                            "buttons": [],
+                                            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                                            "bJQueryUI": true,
+                                            "sDom": 'BT<"clear"><"H"lfr>t<"F"ip>',
+                                            "scrollX": true,
+                                            "responsive": true,
+                                            "data": responses,
+                                            "columns": [
+                                                { "data": null },
+                                                { "data": "StateName" },
+                                                { "data": "District" },
+                                                { "data": "BlockName" },
+                                                { "data": "UDISE" },
+                                                { "data": "SchoolName" },
+                                                { "data": null },
+                                            ],
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                $("td:first", nRow).html(iDisplayIndex + 1);
+
+                                                $("td:last", nRow).html("<a class='fa fa-trash text-danger' onclick='UserMappingDelete(" + aData["MappingId"]+")' title='Unassign School' Style='cursor:pointer;' data-toggle='tooltip' data-placement='bottom'></a>");
+
+                                                return nRow;
+                                            },
+                                        });
+                                        $('#tblServiceAskFor_wrapper').removeClass("form-inline");
+                                        $($('#tblServiceAskFor_length').parent()).addClass('row')
+                                        $('#tblServiceAskFor_length').addClass('col-sm-12 col-md-6')
+                                        $($('#tblServiceAskFor_length').next()).addClass('col-sm-12 col-md-6')
+                                        $($('#tblServiceAskFor_info').parent()).addClass('row')
+                                        $('#tblServiceAskFor_info').addClass('col-sm-12 col-md-6')
+                                        $($('#tblServiceAskFor_info').next()).addClass('col-sm-12 col-md-6');
+                                        $("td:nth-child(7)").addClass('text-center');
+                                    }
+                                }
+                            }
+                        })
+    }
+
+
+
+    function UserMappingDelete(MappingID)
+    {
+        debugger;
+        var p = {MappingID};
+
+    }
+</script>
+<script>
+
+
+   $('#StateID').change(function () {
+       var url = '@Url.Content("~/")' + "Users/GetDistrict";
+                var ddlsource = "#StateID";
+                $.getJSON(url, { stateid: $(ddlsource).val() }, function (data) {
+                    var districtitems = "<option value='0'>All</option>";
+                    $("#DistrictID").empty();
+                    $.each(data, function (i, district) {
+                        districtitems += "<option value='" + district.districtID + "'>" + district.district + "</option>";
+                    });
+                    $('#DistrictID').html(districtitems);
+                });
+      });
+        $('#DistrictID').change(function () {
+            var url = '@Url.Content("~/")' + "Users/GetBlock";
+                var ddlsource = "#DistrictID";
+                $.getJSON(url, { districtId: $(ddlsource).val() }, function (data) {
+                    var blockitems = "";
+                    $("#BlockID").empty();
+
+                    $.each(data, function (i, block) {
+                        blockitems += "<option value='" + block.blockID + "'>" + block.blockName + "</option>";
+                    });
+                    $('#BlockID').html(blockitems);
+                });
+     });
+    function FillBlockList(UserID) {
+
+        //$('#UserID').val(UserID);
+
+        var p = { "UserID": $('#UserID').val(), "Block": $('#BlockID').val() };
+
+                $.ajax({
+                    url: '@Url.Content("~/")' + "Users/FillGroupContent", //Your path should be here
+                    //url: "@Url.Action("FillGroupContent", "Users")", //Your path should be here
+                    type: "POST",
+                    data: p,
+                    success: function (result) {
+
+                        $('#DVLINKLIST').html(result);
+
+                        //$('#divAssignGrid').hide();
+
+                        $('#headingAssign').text("Your Assigned School List");
+                       // $('#ModalshowSchoolMmberList').modal('toggle');
+
+
+                    },
+                    error: function (xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        alert(err.Message);
+                    }
+                });
+
+
+    }
+     function checkAll(ele) {
+        var checkboxes = document.getElementsByTagName('input');
+        if (ele.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = true;
+                }
+            }
+        } else {
+            for (var i = 0; i < checkboxes.length; i++) {
+                console.log(i)
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
+
+    //$(function () {
+    //    setTimeout("LinkGroup()", 5000);
+    //});
+
+    function LinkCheckbox()
+    {
+        var formdata = [];
+
+        debugger;
+        $('input:checkbox').each(function () {
+            if ($(this).is(':checked')) {
+                if ($(this).val() != 'yes') {
+
+                    formdata.push({
+                        Suid: $(this).val()
+                    });
+                }
+
+            }
+
+        });
+
+        formdata = JSON.stringify(formdata);
+    }
+
+    function LinkGroup() {
+         var formdata = [];
+
+         debugger;
+         $('input:checkbox').each(function () {
+             if ($(this).is(':checked')) {
+                 if ($(this).val() != 'yes') {
+
+                     formdata.push({
+                         Suid: $(this).val()
+                     });
+                 }
+                 else
+                 {
+                     location.reload();
+                     @*var urlee = '@Url.Content("~/")' + "Users/AssignSchool/" + $('#UserID').val();
+                 window.location.href = urlee;
+                     alert("se");*@
+                 }
+
+             }
+             else {
+                 @*var urlee = '@Url.Content("~/")' + "Users/AssignSchool/" + $('#UserID').val();
+                 window.location.href = urlee;*@
+                 //alert("ee");
+             }
+
+         });
+
+        formdata = JSON.stringify(formdata);
+
+         var p = { "MemselectedItems": formdata, "userid": $('#UserID').val()};
+         $.ajax({
+             url: '@Url.Content("~/")' + "Users/LinkMember", //Your path should be here
+             // url: "@Url.Action("LinkMember", "Users")", //Your path should be here
+            type: "POST",
+             data: p,
+              success: function (result)
+              {
+                  if (result.length > 0) {
+                      var responses = JSON.parse(result)
+                      if (responses != '0') {
+                         // alert("ss");
+                          @*var url = '@Url.Content("~/")' + "Users/AssignSchool/" + $('#UserID').val();
+                          window.location.href = url;*@
+                          location.reload();
+                      }
+                      else {
+                          location.reload();
+                          @*alert("eppsadasd");
+                          var urlee = '@Url.Content("~/")' + "Users/AssignSchool/" + $('#UserID').val();
+                         window.location.href = urlee;*@
+                      }
+                  }
+                  else {
+                      location.reload();
+                      @*var urlee = '@Url.Content("~/")' + "Users/AssignSchool/" + $('#UserID').val();
+                     window.location.href = urlee;
+                      alert("epp");*@
+                  }
+
+               // $('#ModalshowSchoolMmberList').modal('toggle');
+                @*var url = '@Url.Content("~/")' + "Users/AssignSchool/" + $('#UserID').val();
+                         window.location.href = url;*@
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+            }
+         });
+            @*var url = '@Url.Content("~/")' + "Users/AssignSchool/" + $('#UserID').val();
+                  window.location.href = url;*@
+        location.reload();
+     }
+
+
+</script>
+
+

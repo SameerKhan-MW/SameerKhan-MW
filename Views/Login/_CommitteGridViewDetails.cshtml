@@ -1,0 +1,106 @@
+﻿@using SchoolProgramme
+@model List<CommitteMember>
+
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    <table id="tblCommitGrid" data-toggle="tooltip" data-placement="bottom" title="Please click 'Excel' or 'PDF' if you want to have a copy of Steering Committee members list. " class="table table-bordered table-centered dt-responsive w-100">
+        <thead>
+            <tr>
+                <th class="text-left">
+                    SR.No.
+                </th>
+                <th class="text-left" style="width:3%;">
+                    Name
+                </th>
+                <th class="text-left">
+                    Category
+                </th>
+                <th class="text-left">
+                    Roles And Responsibility
+                </th>
+                <th class="text-left">Email</th>
+                <th class="text-center">Edit</th>
+                <th class="text-center">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count() > 0)
+            {
+                for (int i = 0; i < Model.Count(); i++)
+                {
+                    <tr>
+                        <td>
+
+                            @( ((Int32) 1) + i)
+                        </td>
+                        <td class="" style="width:3%;">
+                            @Model[i].Name
+                        </td>
+                        <td style="width:5%;">
+                            @Model[i].Category
+                        </td>
+                        <td>
+                            @Model[i].RoleResponsibilities
+                        </td>
+                        <td>
+                            @Model[i].EmailId
+                        </td>
+                        <td class="text-center">
+                            <a data-ajax="true"
+                               method="GET" class="toggle-tooltip" title="Click here, to edit POA details"
+                               data-ajax-update="#div-EditCommitteMemberPopUp" data-ajax-mode="replace"
+                               data-backdrop="static" data-keyboard="false"
+                               href="@Url.Action("EditCommitteMemberDetails", "Login", new { @Id = Model[i].Id })"
+                               id="a_EditCommitteMember" data-toggle="modal" data-target="#divEditCommitteMember">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                        </td>
+
+                        <td class="text-center">
+                            <a data-ajax="true" class="toggle-tooltip" href="@Url.Action("RemoveCommitteMemberDetails", "Login", new { @Id = Model[i].Id })"
+                               title="Click here, to delete current row" id="DeleteCommitteMember" data-ajax-method="GET"
+                               data-ajax-mode="replace" data-ajax-update="#divCommitteDetails"
+                               data-ajax-confirm="Are you sure you want to delete this record?" style="color:red;">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">No Record Found. </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <h6 style="text-align: center;color: darkred;">
+        No Record Found...
+    </h6>
+}
+<script>
+    $(function () {
+
+        $('#tblCommitGrid').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+                'excelHtml5',
+                'pdf'
+            ],
+            'paging': true,
+            'lengthChange': false,
+            "scrollX": true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+
+        });
+    })
+</script>

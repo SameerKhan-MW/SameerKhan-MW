@@ -1,0 +1,601 @@
+﻿@model IEnumerable<SchoolProgramme.Models.MstUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdminLTEAdmin.cshtml";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#UserTables').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+                'excelHtml5'
+            ],
+            'paging': true,
+            'lengthChange': false,
+            "scrollX": true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+
+        })
+        $('#tblContactList').DataTable({
+            dom: 'lBfrtip',
+            buttons: [
+
+            ],
+            columns: [
+                { width: '10%' },
+                { width: '20%' },
+                { width: '20%' },
+                { width: '20%' },
+                { width: '20%' }
+            ],
+            'paging': false,
+            'lengthChange': false,
+            "scrollX": true,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true
+        })
+    })
+</script>
+
+<style>
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0px solid #72def6;
+        border-radius: .25rem;
+    }
+
+    .bgButton {
+        background: #bfd600 !important;
+        border-color: #bfd600 !important;
+    }
+
+        .bgButton:hover {
+            background: #b2c607 !important;
+            border-color: #b2c607 !important;
+        }
+
+
+    .bgbagheader {
+        background: #b9f2ff; /* Old browsers */
+    }
+
+    .dataTables_length {
+        margin-left: 10px;
+    }
+    
+    .btn-orang {
+        color: #fff;
+        background-color: #f39c12;
+        border-color: #f39c12;
+    }
+
+        .btn-orang:hover {
+            color: #fff;
+            background-color: #fe8936;
+            border-color: #fe8936;
+        }
+
+    button.dt-button, div.dt-button, a.dt-button {
+        position: relative;
+        display: inline-block;
+        box-sizing: border-box;
+        margin-right: 0.333em;
+        padding: 0.5em 1em;
+        border: 1px solid #999;
+        border-radius: 2px;
+        cursor: pointer;
+        font-size: 0.88em;
+        color: black;
+        white-space: nowrap;
+        overflow: hidden;
+        background-color: #e9e9e9;
+        background-image: -webkit-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+        background-image: -moz-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+        background-image: -ms-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+        background-image: -o-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+        background-image: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#e9e9e9');
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        text-decoration: none;
+        outline: none;
+    }
+
+    div.dt-buttons {
+        position: relative;
+        float: left;
+        /*padding: 0px;
+        margin: 13px 12px 0px 12px;*/
+    }
+
+    /*.buttons-html5 {
+        background-color: #4CAF50 !important;*/ /* Green */
+    /*border: none !important;
+        color: white !important;
+        text-align: center !important;
+        text-decoration: none !important;
+        display: inline-block !important;
+        padding: 5px;
+        margin: 2px;
+    }*/
+</style>
+
+<form asp-action="Index" class="mt-4 mb-4">
+    <section id="AboutSection">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6">
+                    <h4 class="Headingcolorbg">Manage User</h4>
+                </div>
+                <div class="col-xl-6 col-lg-6">
+                    <div class="pull-right">
+                        <a asp-action="Create" class="btn btn-primary backtodetailbutton">&nbsp;Add New User</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <table id="UserTables" class="table table-striped table-bordered cell-border " style="width:100%;" overflow="auto">
+                        <thead>
+                            <tr>
+                                <th>
+                                    S.No.
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Username")
+                                </th>
+
+                                <th>
+                                    @Html.DisplayName("Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Email")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Contact")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Role")
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int a = 1;
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@a</td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FullName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.UserEmailID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Mobile)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Role.Role)
+                                        </td>
+
+                                        <td>
+                                            <a asp-action="Edit" asp-route-id="@item.UserID" class="text-success edicon" title="Edit" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> &nbsp;&nbsp;
+
+                                            <a asp-action="UpdateRole" asp-route-id="@item.UserID" class="text-primary edicon" title="Update Role" data-toggle="tooltip" data-placement="bottom"><i class="fa fa-user-plus" aria-hidden="true"></i></a> &nbsp;&nbsp;
+
+                                            @if (@item.RoleID == 1 || @item.RoleID == 2 || @item.RoleID == 3 || @item.RoleID == 6)
+                                            {
+                                                <a style="cursor:pointer;" title="Assign School" data-toggle="tooltip" data-placement="bottom" onclick="getselectedlist(@item.UserID)" class="text-secondary edicon"><i class="fa fa-plus" aria-hidden="true"></i></a>
+
+                                                <input type="hidden" id="GUserID" value="@item.UserID"/>
+
+                                                @*<a asp-action="AssignSchool" style="cursor:pointer;" asp-route-id="@item.UserID" title="Assign School" data-toggle="tooltip" data-placement="bottom" class="text-secondary edicon"><i class="fa fa-plus" aria-hidden="true"></i></a>*@
+                                            }
+
+                                        </td>
+                                    </tr>
+                                    a += 1;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <input type="hidden" id="hdUserID" />
+    <div id="ModalshowSchoolMmberList" class="modal fade" tabindex="-1" role="dialog"
+         aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content" style="height:600px;">
+                <div class="modal-header">
+                    <h5 style="font-weight:600">Schools</h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="ClosePop()">&times;</button>
+                </div>
+                <div class="modal-body" style="height:400px; overflow:auto;">
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12">
+                            <table class="table table-borderless mb-0">
+                                <tr>
+                                    <td><h6 class="pull-right mt-2">State</h6></td>
+                                    <td style="width:35%">
+                                        <select type="text" required id="StateID" class="form-control" asp-items="@ViewBag.StateID">
+                                            <option value="0">Select</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <h6 class="pull-right mt-2">District</h6>
+                                    </td>
+                                    <td style="width:35%">
+                                        <select type="text" required class="form-control" id="DistrictID" name="DistrictID" asp-items="ViewBag.DistrictID">
+                                            <option value="0">Select</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <h6 class="pull-right mt-2">Block</h6>
+                                    </td>
+                                    <td style="width:35%">
+                                        <select id="BlockID" name="BlockID" class="form-control" asp-items="ViewBag.BlockID" required>
+                                            <option value="0">Select</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-success savebutton" onclick="FillBlockList($('#hdUserID').val())"><i class="fa fa-search"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="DVLINKLIST" class="w-100"></div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6">
+                            <h6 id="headingAssign" style="position:absolute;top:15px;" class="text-purple"></h6>
+                        </div>
+                        <div class="col-xl-6 col-lg-6">
+                        <a class="btn btn-danger btn-sm" onclick="UserAllMappingDelete($('#hdUserID').val())" style="cursor:pointer;position:absolute;left:20%;margin-top:10px;z-index:999;" id="btnUnassigned"><i class="fa fa-trash text-white"></i>&nbsp;Unassigned All School</a>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-xl-12 col-lg-12">
+                            <div id="divAssignGrid">
+                                <table id="tblServiceAskFor" class="table table-bordered" style="width:100%;font-size:14px;"></table>
+                            </div>
+                        </div>
+                    </div>                   
+                </div>
+                <div class="modal-footer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6">
+                                <div class="pull-left">
+                                    <a class="btn btn-primary btn-sm" onclick="BackAssignList($('#hdUserID').val())" style="cursor:pointer;" id="btnBackAssignList">Back to Assign School List</a>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6">
+                                <div class="pull-right">
+                                    <input onclick="LinkGroup();" class="btn btn-success btn-sm" value="Tag School" type="submit" id="btnTag" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+
+</form>
+<script>
+     $('#StateID').change(function () {
+       var url = '@Url.Content("~/")' + "Users/GetDistrict";
+                var ddlsource = "#StateID";
+                $.getJSON(url, { stateid: $(ddlsource).val() }, function (data) {
+                    var districtitems = "<option value='0'>All</option>";
+                    $("#DistrictID").empty();
+                    $.each(data, function (i, district) {
+                        districtitems += "<option value='" + district.districtID + "'>" + district.district + "</option>";
+                    });
+                    $('#DistrictID').html(districtitems);
+                });
+      });
+        $('#DistrictID').change(function () {
+            var url = '@Url.Content("~/")' + "Users/GetBlock";
+                var ddlsource = "#DistrictID";
+                $.getJSON(url, { districtId: $(ddlsource).val() }, function (data) {
+                    var blockitems = "";
+                    $("#BlockID").empty();
+
+                    $.each(data, function (i, block) {
+                        blockitems += "<option value='" + block.blockID + "'>" + block.blockName + "</option>";
+                    });
+                    $('#BlockID').html(blockitems);
+                });
+     });
+    function FillBlockList(Flag) {
+        debugger;
+        var p = { "UserID": Flag, "Block": $('#BlockID').val() };
+
+                $.ajax({
+                    url: '@Url.Content("~/")' + "Users/FillGroupContent", //Your path should be here
+                    //url: "@Url.Action("FillGroupContent", "Users")", //Your path should be here
+                    type: "POST",
+                    data: p,
+                    success: function (result) {
+
+                        $('#DVLINKLIST').show();
+                        $('#DVLINKLIST').html(result);
+
+                        $('#divAssignGrid').hide();
+
+                        $('#btnUnassigned').hide();
+                        
+                        $('#headingAssign').hide();
+                        $('#btnTag').show();
+                        $('#btnBackAssignList').show();
+                    },
+                    error: function (xhr, status, error) {
+                        var err = eval("(" + xhr.responseText + ")");
+                        alert(err.Message);
+                    }
+                });
+    }
+
+</script>
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+       $('#headingAssign').text("Assigned School List");
+    });
+    function GetUserLocation(UFlag) {
+        //debugger;
+        var UserID = UFlag;
+        var p = { "UserId": UserID };
+                        $.ajax({
+                            url: '@Url.Content("~/")' + "Users/GetAssignSchoolShow", //Your path should be here
+                            type: "POST",
+                            data: p,
+                            success: function (result) {
+                                if (result.length > 0)
+                                {
+                                    var responses = JSON.parse(result)
+                                    if (responses=="")
+                                    {
+                                        $('#btnUnassigned').hide();
+                                    }
+                                    if (responses != '0') {
+                                        if ($.fn.DataTable.isDataTable('#tblServiceAskFor')) {
+                                            $('#tblServiceAskFor').DataTable().destroy();
+                                            $('#tblServiceAskFor').empty();
+                                        }
+                                        $("<thead><tr><th>S.NO.</th><th>State</th><th>District</th><th>Block</th><th>UDISE</th><th>School Name</th><th>Action</th></tr></thead>").appendTo($('#tblServiceAskFor'));
+                                        $('#tblServiceAskFor').DataTable({
+                                            "buttons": [],
+                                            /*"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],*/
+                                            "bJQueryUI": true,
+                                            "sDom": 'BT<"clear"><"H"lfr>t<"F"ip>',
+                                            "scrollX": true,
+                                            "responsive": true,
+                                            "lengthChange": false,
+                                            "data": responses,
+                                            "columns": [
+                                                { "data": null },
+                                                { "data": "StateName" },
+                                                { "data": "District" },
+                                                { "data": "BlockName" },
+                                                { "data": "UDISE" },
+                                                { "data": "SchoolName" },
+                                                { "data": null },
+                                            ],
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                $("td:first", nRow).html(iDisplayIndex + 1);
+
+                                                $("td:last", nRow).html("<a class='fa fa-trash text-danger' onclick='UserMappingDelete(" + aData["MappingId"]+")' title='Unassign School' Style='cursor:pointer;' data-toggle='tooltip' data-placement='bottom'></a>");
+
+                                                return nRow;
+                                            },
+                                        });
+                                        $('#tblServiceAskFor_wrapper').removeClass("form-inline");
+                                        $($('#tblServiceAskFor_length').parent()).addClass('row')
+                                        $('#tblServiceAskFor_length').addClass('col-sm-12 col-md-6')
+                                        $($('#tblServiceAskFor_length').next()).addClass('col-sm-12')
+                                        $($('#tblServiceAskFor_info').parent()).addClass('row')
+                                        $('#tblServiceAskFor_info').addClass('col-sm-12 col-md-6')
+                                        $($('#tblServiceAskFor_info').next()).addClass('col-sm-12 col-md-6');
+                                        $("td:nth-child(7)").addClass('text-center');
+                                    }
+                                }
+                            }
+                        })
+    }
+
+    function UserMappingDelete(MappingID)
+    {
+        debugger;
+        var p = { MappingID };
+
+        $.ajax({
+            url: '@Url.Content("~/")' + "Users/UserMappingDelete", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result) {
+                if (result.length > 0)
+                {
+                    var responses = JSON.parse(result)
+                    if (responses != '0')
+                    {
+                        GetUserLocation($('#hdUserID').val());
+                        $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Unassign School Succesful", {
+                            type: 'danger',
+                            align: 'center',
+                            width: 'auto',
+                            offset: { from: 'top', amount: 100 }, // 'top', or 'bottom'
+                            allow_dismiss: true,
+                            delay: 5000
+                        });
+                    }
+                }
+            }
+        });
+    }
+
+    function UserAllMappingDelete(MappingID) {
+        debugger;
+        var p = { MappingID };
+
+        $.ajax({
+            url: '@Url.Content("~/")' + "Users/UserAllMappingDelete", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result) {
+                if (result.length > 0)
+                {
+                    var responses = JSON.parse(result)
+                    if (responses != '0')
+                    {
+
+                        GetUserLocation(MappingID);
+                        $.bootstrapGrowl("<i class='fa fa-check-circle' aria-hidden='true'></i> Unassign All Schools Succesful", {
+                            type: 'danger',
+                            align: 'center',
+                            width: 'auto',
+                            offset: { from: 'top', amount: 100 }, // 'top', or 'bottom'
+                            allow_dismiss: true,
+                            delay: 5000
+                        });
+
+                    }
+                }
+            }
+        });
+    }
+
+
+     function getselectedlist(UserID)
+    {
+         $('#hdUserID').val(UserID);
+         GetUserLocation(UserID);
+         $('#ModalshowSchoolMmberList').modal('toggle');
+         $('#btnTag').hide();
+         $('#btnBackAssignList').hide();
+    }
+     function checkAll(ele) {
+        var checkboxes = document.getElementsByTagName('input');
+        if (ele.checked) {
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = true;
+                }
+            }
+        } else {
+            for (var i = 0; i < checkboxes.length; i++) {
+                console.log(i)
+                if (checkboxes[i].type == 'checkbox') {
+                    checkboxes[i].checked = false;
+                }
+            }
+        }
+    }
+     function LinkGroup() {
+         var formdata = [];
+         debugger;
+         $('input:checkbox').each(function () {
+             if ($(this).is(':checked')) {
+                 if ($(this).val() != 'yes') {
+
+                     formdata.push({
+                         Suid: $(this).val()
+                     });
+                 }
+             }
+         });
+
+        formdata = JSON.stringify(formdata);
+
+         var p = { "MemselectedItems": formdata, "userid": $('#hdUserID').val()};
+
+          $.ajax({
+              url: "@Url.Action("LinkMember", "Users")", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result) {
+
+                $('#ModalshowSchoolMmberList').modal('toggle');
+                var url = '@Url.Content("~/")' + "Users/Index";
+                         window.location.href = url;
+            },
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                alert(err.Message);
+            }
+            });
+    }
+
+    function ClosePop()
+    {
+         $('#ModalshowSchoolMmberList').modal('toggle');
+         var url = '@Url.Content("~/")' + "Users/Index";
+         window.location.href = url;
+    }
+    function BackAssignList(UserID)
+    {
+          debugger;
+        var p = { UserID };
+
+        $.ajax({
+            url: '@Url.Content("~/")' + "Users/BackAssignList", //Your path should be here
+            type: "POST",
+            data: p,
+            success: function (result) {
+                if (result.length > 0)
+                {
+                    var responses = JSON.parse(result)
+                    if (responses != '0')
+                    {
+                        GetUserLocation(UserID);
+                        $('#DVLINKLIST').hide();
+                        $('#divAssignGrid').show();
+                        $('#btnUnassigned').show();
+                        $('#headingAssign').show();
+                        $('#btnTag').hide();
+                        $('#btnBackAssignList').hide();
+                        $('#StateID').val(0);
+                        $('#DistrictID').empty();
+                        $('#DistrictID').append('<option value=0>Select</option>');
+                        $("#BlockID").empty();
+                        $('#BlockID').append('<option value=0>Select</option>');
+                    }
+                }
+            }
+        });      
+
+    }
+</script>

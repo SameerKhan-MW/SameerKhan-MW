@@ -1,0 +1,429 @@
+﻿@model SchoolProgramme.Models.tblRegistrationForm
+
+@{
+    ViewData["Title"] = "Registration";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Registration - FAIRTRADE SCHOOLS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/Images/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/cutom.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0//css/font-awesome.css" media="all" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="~/js/ValidationCM.js"></script>
+    <script src="~/js/jquery.bootstrap-growl.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.js"></script>
+    <style>
+
+        .boinp {
+            border-left: 1px solid #ced4da !important;
+            border-radius: 0 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form action="Registration" method="post" class="needs-validation" novalidate>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="login-main-wrp">
+            <div class="row new-lg">
+                <div class="col-md-12 col-lg-5">
+                    <div class="left-side-sc">
+                        <figure>
+                            <a href="@Url.Action("Index","Home")">
+                                <div class="pic-ft">
+                                    <img src="~/Images/logo.jpg" alt="">
+                                </div>
+                            </a>
+                            <h2>Welcome To </h2>
+                            <h3 class="text-white">Fairtrade India Schools Programme </h3>
+                        </figure>
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-lg-7">
+                    <div class="right-side-sc">
+                        <div class="scroll-right-wp">
+                            <div class="tab-log-btn mb-3">
+                                <a href="@Url.Action("Login","Login")" class="btn btn-light" style="text-transform:uppercase;">Login</a>
+                                <a href="@Url.Action("Registration","Login")" class="btn btn-light text-primary" style="text-transform:uppercase;">Registration</a>
+                            </div>
+
+                            <h5 class="bo-heading mt-3">School Address Info & Registration</h5>
+                            <div class="row">
+                                <div class="col-md-6" style="display:none">
+                                    <label for="">Registration Date</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/date.svg" alt=""></span>
+                                        </div>
+                                        <input asp-for="RegistrationDate" class="form-control" type="date" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="">Name of School</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span  class="input-group-text"><img src="../Images/school-name.svg" alt=""></span>
+                                        </div>
+                                        <input data-toggle="tooltip" data-placement="bottom" title="Please provide Fullname of the School. If your School is a part of a network school then add name of the city after a comma. E.g. ABC School, Delhi" asp-for="SchoolName" required class="form-control" id="txtSchoolName" maxlength="150" onchange="CheckAvail('txtSchoolName','SN','School Name')" />
+                                        <span asp-validation-for="SchoolName" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <label for="">School's Email </label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/email.svg" alt=""></span>
+                                        </div>
+                                        <input data-toggle="tooltip" data-placement="bottom" title="This email id will receive login credentials and all major communication from Fairtrade India Team" asp-for="SchoolEmail" required id="txtSchoolEmail" maxlength="50" onchange="CheckAvail('txtSchoolEmail','SE','School Email')" class="form-control" />
+                                        <span asp-validation-for="SchoolEmail" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-6">
+                                    <label for="">State</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/state.svg" alt=""></span>
+                                        </div>
+                                        <select type="text" required id="StateId" class="form-control" asp-for="StateID" asp-items="@(new SelectList(@ViewBag.State,"StateId","StateName"))">
+                                            <option value="0">Select</option>
+                                        </select>
+
+                                        <span asp-validation-for="StateID" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">District</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/city.svg" alt=""></span>
+                                        </div>
+                                        <select type="text" required class="form-control" asp-for="DistrictID" id="DistrictId" name="DistrictId" asp-items="@(new SelectList(string.Empty,"DistrictId","DistrictName"))"></select>
+                                        <span asp-validation-for="DistrictID" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="">Pin Code </label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/adresss.svg" alt=""></span>
+                                        </div>
+                                        <input type="text" required class="form-control" asp-for="Pincode" onkeydown="return ValidateNumber(event);" maxlength="8">
+                                        <span asp-validation-for="Pincode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">Area</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../../Images/city.svg" alt=""></span>
+                                        </div>
+                                        <select type="text" required id="dllarea" class="form-control" asp-for="Area" asp-items="@(new SelectList(string.Empty,"PinLatLongId","PlaceName"))"></select>
+                                        <span asp-validation-for="Area" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="">School Code / UDISE Code</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/school-code.svg" alt=""></span>
+                                        </div>
+                                        <input type="text" required class="form-control" id="txtSchoolCode" maxlength="12" onchange="CheckAvail('txtSchoolCode','SC','School Code / UDISE Code')" asp-for="SchoolCode">
+                                        <span asp-validation-for="SchoolCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div id="divschooldetail" class="col-md-12"></div>
+
+                                <div class="col-md-12">
+                                    <label for="">Address</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/adresss.svg" alt=""></span>
+                                        </div>
+                                        <textarea data-toggle="tooltip" data-placement="bottom" title="Please provide complete address. Landmark will be helpful."  id="txtadress" required cols="30" rows="3" class="form-control" maxlength="250" asp-for="Address"></textarea>
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mt-3">
+                                    <h5 class="bo-heading mt-2">School's Staff Information</h5>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="">Total No. Of Students</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/adresss.svg" alt=""></span>
+                                        </div>
+                                        <input data-toggle="tooltip" data-placement="bottom" title="Please consider entire students population of your school - KG to Grade 12 all inclusive" type="text" class="form-control" onkeydown="return ValidateNumber(event);" maxlength="6" asp-for="TotalNoofStudent" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="">Total No. Of Teaching Staff</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/adresss.svg" alt=""></span>
+                                        </div>
+                                        <input data-toggle="tooltip" data-placement="bottom" title="Please consider entire teaching population of your school - permanent and temporary teaching staff plus the Principal." type="text" class="form-control" asp-for="TotalNoofTeachingStaff" onkeydown="return ValidateNumber(event);" maxlength="6" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="">Total No. Of Non Teaching Staff</label>
+                                    <div class="input-group mb-3 input-group-lg">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><img src="../Images/adresss.svg" alt=""></span>
+                                        </div>
+                                        <input data-toggle="tooltip" data-placement="bottom" title="Please consider administration, house keeping, canteen staff, management including leadership team." type="text" class="form-control" asp-for="TotalNoofNonTeachingStaff" onkeydown="return ValidateNumber(event);" maxlength="6" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <h5 title="please tick all that apply">Type Of School</h5>
+                                </div>
+                                @{
+                                    foreach (var item in ViewBag.SchoolType)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" onchange="SaveChecked(1)" name="cbtypeofschool" value="@item.SclTypeId">@item.SchoolType
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                <input asp-for="TypeOfSchool" type="hidden" />
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 mt-3">
+                                    <h5>Type Of Curriculum Followed </h5>
+                                </div>
+
+                                @{
+                                    foreach (var item in ViewBag.SchoolCurriculum)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <label class="form-check-label">
+                                                    <input type="checkbox" class="form-check-input" onchange="SaveChecked(2)" name="cbtypeofcurriculum" value="@item.CurriculumId">@item.CurriculumType
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                <input asp-for="TypeOfCurriculumFollowedOtherSpec" type="text" style="display:none;" />
+                                <input asp-for="TypeOfCurriculumFollowed" type="hidden" />
+                            </div>
+                            <div class="row mt-2 mb-2">
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <dnt-captcha asp-captcha-generator-max="999999"
+                                                     asp-captcha-generator-min="111111"
+                                                     asp-captcha-generator-language="English"
+                                                     asp-captcha-generator-display-mode="ShowDigits"
+                                                     asp-use-relative-urls="true"
+                                                     asp-placeholder="Enter Captcha"
+                                                     asp-validation-error-message="Please enter the security code."
+                                                     asp-font-name="Tahoma"
+                                                     asp-font-size="20"
+                                                     asp-fore-color="#333333"
+                                                     asp-back-color="#ccc"
+                                                     asp-text-box-class="text-box form-control boinp"
+                                                     asp-text-box-template="<span class='input-group-prepend'><span class='form-group-text'></span></span>{0}"
+                                                     asp-validation-message-class="text-danger"
+                                                     asp-refresh-button-class="fa fa-repeat btn-sm"
+                                                     asp-use-noise="false" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <button type="submit" class="btn btn-primary w-75" style="letter-spacing:.03em;margin-top:35px"><i class="fa fa-sign-in fa-lg fa-fw"></i>&nbsp;Sign Up</button>
+                                </div>
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $(document).ready(function () {
+            var items = "<option value='0'>Select</option>";
+            document.getElementById("RegistrationDate").valueAsDate = new Date();
+
+            $('#DistrictId').html(items);
+
+            $('#StateId').change(function () {
+                var url = '@Url.Content("~/")' + "Login/GetDistrict";
+                var ddlsource = "#StateId";
+                $.getJSON(url, { stateid: $(ddlsource).val() }, function (data) {
+                    var districtitems = "<option value='0'>Select</option>";
+                    $("#DistrictId").empty();
+                    $.each(data, function (i, district) {
+                        districtitems += "<option value='" + district.districtId + "'>" + district.districtName + "</option>";
+                    });
+                    $('#DistrictId').html(districtitems);
+                });
+            });
+
+            $('#Pincode').blur(function () {
+
+                var url = '@Url.Content("~/")' + "Login/GetArea";
+                var ddlsource = "#Pincode";
+                $.getJSON(url, { pincode: $(ddlsource).val() }, function (data) {
+                    debugger;
+                    var areaitems = "<option value='0'>Select</option>";
+                    $("#dllarea").empty();
+                    $.each(data, function (i, area) {
+                        areaitems += "<option value='" + area.pinLatLongId + "'>" + area.placeName + "</option>";
+                    });
+                    $('#dllarea').html(areaitems);
+                });
+            });
+
+            $('#SchoolEmail').blur(function () {
+                var regex = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+                if (!regex.test($('#SchoolEmail').val())) {
+                    $('#SchoolEmail').val(''); $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Enter Valid Email.", {
+                        type: 'danger',
+                        align: 'center',
+                        width: 'auto',
+                        allow_dismiss: true,
+                        delay: 10000
+                    }); }
+            });
+
+            $('#SchoolCode').blur(function () {
+                var url = '@Url.Content("~/")' + "Login/GetSchoolDetail";
+                var ddlsource = "#SchoolCode";
+                $.getJSON(url, { udise: $(ddlsource).val() }, function (data) {
+                    var schooldetail = "";
+                    $.each(data, function (i, n) {
+                        schooldetail += "<div class='row'><div class='col-md-4'><label for= '' > School Name</label><div class='input-group mb-3 input-group-lg'><label for=''>" + n.schoolNmae + "</label></div></div><div class='col-md-4'><label for= '' > School Category</label><div class='input-group mb-3 input-group-lg'><label for=''>" + n.schoolCategory + "</label></div></div><div class='col-md-4'><label for= '' > School Management</label><div class='input-group mb-3 input-group-lg'><label for=''>" + n.schoolManagement +"</label></div></div></div>";
+                    });
+                    $('#divschooldetail').html(schooldetail);
+                });
+            });
+
+            if ('@ViewBag.Username' != '' && '@ViewBag.Password' != '') {
+
+                //$.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> Registration successfull.", {
+                //    type: 'info',
+                //    align: 'center',
+                //    width: 'auto',
+                //    allow_dismiss: true,
+                //    delay: 10000
+                //});
+            }
+        });
+
+        function SaveChecked(flag) {
+            try {
+                if (flag == 1) {
+                    $('#TypeOfSchool').val($.map($(':checkbox[name="cbtypeofschool"]:checked'), function (n, i) {
+                        return n.value;
+                    }).join(','));
+                }
+                else if (flag == 2) {
+                    $('#TypeOfCurriculumFollowed').val($.map($(':checkbox[name="cbtypeofcurriculum"]:checked'), function (n, i) {
+                        return n.value;
+                    }).join(','));
+                    if ($.map($(':checkbox[name="cbtypeofcurriculum"]:checked'), function (n, i) {
+                        return n.value;
+                    }).indexOf('999') != -1) {
+                        $('#TypeOfCurriculumFollowedOtherSpec').show();
+                    }
+                    else {
+                        $('#TypeOfCurriculumFollowedOtherSpec').hide();
+                    }
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+
+
+
+
+        function CheckAvail(CTRLID, FLAG, MSG) {
+
+        var masterData = {
+            "Cntxtt": $('#' + CTRLID + '').val(), "FLAG": FLAG
+                };
+                $.ajax({
+                    url: '@Url.Content("~/")' + "Login/IsAvailable",
+                    type: "POST",
+                    data: masterData,
+                    success: function (result) {
+                        if (result == false) {
+                            $.bootstrapGrowl("<i class='fa fa-exclamation-triangle' aria-hidden='true'></i> " + MSG +" Already Exist ! Please try another.", {
+                                type: 'danger',
+                                align: 'center',
+                                width: 'auto',
+                                allow_dismiss: true,
+                                delay: 10000
+                            });
+
+                            $('#' + CTRLID + '').val('');
+                            $('#' + CTRLID + '').focus();
+                        }
+                    }
+                })
+
+    }
+
+    </script>
+    <script type="text/javascript">
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+
+</body>
+
+</html>
+
