@@ -1,0 +1,38 @@
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\appsettings.Development.json
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\appsettings.json
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\Self All in One.exe
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\Self All in One.deps.json
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\Self All in One.runtimeconfig.json
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\Self All in One.runtimeconfig.dev.json
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\Self All in One.dll
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\Self All in One.pdb
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\Self All in One.Views.dll
+C:\Users\harsh\source\repos\Self All in One\Self All in One\bin\Debug\netcoreapp3.1\Self All in One.Views.pdb
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.csproj.AssemblyReference.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.AssemblyInfoInputs.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.AssemblyInfo.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.csproj.CoreCompileInputs.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.RazorAssemblyInfo.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.RazorAssemblyInfo.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\staticwebassets\Self All in One.StaticWebAssets.Manifest.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\staticwebassets\Self All in One.StaticWebAssets.xml
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\scopedcss\bundle\Self All in One.styles.css
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.TagHelpers.input.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.TagHelpers.output.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.RazorCoreGenerate.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.RazorTargetAssemblyInfo.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.RazorTargetAssemblyInfo.cs
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.Views.pdb
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.dll
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.pdb
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.genruntimeconfig.cache
+C:\Users\harsh\source\repos\Self All in One\Self All in One\obj\Debug\netcoreapp3.1\Self All in One.csproj.CopyComplete
